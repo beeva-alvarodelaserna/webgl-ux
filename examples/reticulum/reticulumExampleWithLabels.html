@@ -130,25 +130,6 @@ for( var i =0; i < boxCount; i++ ) {
 	addMesh(boxGeometry, x, 0, z, i);
 }
 
-// Rotate an object around an arbitrary axis in object space
-var rotObjectMatrix;
-function rotateAroundObjectAxis(object, axis, radians) {
-    rotObjectMatrix = new THREE.Matrix4();
-    rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
-
-    // old code for Three.JS pre r54:
-    // object.matrix.multiplySelf(rotObjectMatrix);      // post-multiply
-    // new code for Three.JS r55+:
-    object.matrix.multiply(rotObjectMatrix);
-
-    // old code for Three.js pre r49:
-    // object.rotation.getRotationFromMatrix(object.matrix, object.scale);
-    // old code for Three.js r50-r58:
-    // object.rotation.setEulerFromRotationMatrix(object.matrix);
-    // new code for Three.js r59+:
-    object.rotation.setFromRotationMatrix(object.matrix);
-}
-
 function addMesh(geo, x, y, z, i) {
 
 	var object = new THREE.Mesh( geo, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
@@ -195,8 +176,7 @@ function addMesh(geo, x, y, z, i) {
 
 }
 
-function makeTextSprite( message, parameters )
-{
+function makeTextSprite( message, parameters ) {
 	if ( parameters === undefined ) parameters = {};
 	var fontface = parameters.hasOwnProperty("fontface") ? parameters["fontface"] : "Arial";
 	var fontsize = parameters.hasOwnProperty("fontsize") ? parameters["fontsize"] : 18;
@@ -230,8 +210,7 @@ function makeTextSprite( message, parameters )
 }
 	
 // function for drawing rounded rectangles
-function roundRect(ctx, x, y, w, h, r) 
-{
+function roundRect(ctx, x, y, w, h, r) {
     ctx.beginPath();
     ctx.moveTo(x+r, y);
     ctx.lineTo(x+w-r, y);
