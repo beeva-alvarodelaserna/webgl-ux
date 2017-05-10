@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<script src="https://www.w3schools.com/lib/w3data.js"></script>
 <head>
 	<meta charset="utf-8" />
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -14,8 +15,6 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-
-	<script src="https://www.w3schools.com/lib/w3data.js"></script>
 
 	<!-- CSS Files -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -82,162 +81,160 @@
 </head>
 
 <body class="components-page">
+	<nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll" role="navigation">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button id="menu-toggle" type="button" class="navbar-toggle" data-target="#navigation-doc">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar bar1"></span>
+	        <span class="icon-bar bar2"></span>
+	        <span class="icon-bar bar3"></span>
+	      </button>
+	      <a href="https://labs.beeva.com/" target="_blank">
+	           <div class="logo-container">
+	                <div class="logo">
+	                    <img src="assets/img/logo.png" alt="BEEVA <strong>Labs</strong> Logo">
+	                </div>
+	                <div class="brand">
+	                    BEEVA <strong>LAB</strong>
+	                </div>
+	            </div>
+	      </a>
+	    </div>
 
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="navigation-doc">
+			<ul  class="nav navbar-nav navbar-right">
+				<li>
+					<a href="https://labs.beeva.com/">Beeva Labs</a>
+				</li>
+				
+	    	</ul>
 
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
 
-<nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll" role="navigation">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button id="menu-toggle" type="button" class="navbar-toggle" data-target="#navigation-doc">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar bar1"></span>
-        <span class="icon-bar bar2"></span>
-        <span class="icon-bar bar3"></span>
-      </button>
-      <a href="https://labs.beeva.com/" target="_blank">
-           <div class="logo-container">
-                <div class="logo">
-                    <img src="assets/img/logo.png" alt="BEEVA <strong>Labs</strong> Logo">
-                </div>
-                <div class="brand">
-                    BEEVA <strong>LAB</strong>
-                </div>
-            </div>
-      </a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navigation-doc">
-		<ul  class="nav navbar-nav navbar-right">
-			<li>
-				<a href="https://labs.beeva.com/">Beeva Labs</a>
-			</li>
-			
-    	</ul>
-
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-<div class="wrapper">
-	<div class="header"  style="background-color: #3D5AFE;">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<h1 class="text-center">VR WEBGL CASOS DE USO</h1>
+	<div class="wrapper">
+		<div class="header"  style="background-color: #3D5AFE;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<h1 class="text-center">VR WEBGL CASOS DE USO</h1>
+					</div>
 				</div>
 			</div>
 		</div>
+
+	    <div class="main main-raised">
+	        <div class="section">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-2">
+	                <div class="fixed-section" data-spy="affix" data-offset-top="340">
+	                    <ul>
+	                        <li><a href="#cursores-row">Cursores</a></li>
+	                        <li><a href="#precargas-row">Precargas</a></li>
+	                        <li><a href="#video-row">Vídeo players</a></li>
+	                        <li><a href="#elementos-row">Elementos accionables</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	            <div class="col-md-8 col-md-offset-1">
+	                <div class="tim-container">
+
+		    	<!-- cursores row -->
+		        <div class="tim-row" id="cursores-row">
+
+	                <h2><strong>Cursores</strong></h2>
+	                <legend>sdsadsad</legend>
+	                <h3 class="space-top"><strong>Cursor de visión o gaze-pointer </strong></h3>
+	                
+	                <p>El gaze-pointer o puntero de mirada, es el puntero que el usuario controla con su orientación de cabeza e interactúa con objetos o elementos de interfaz de usuario como lo harían con un puntero del ratón. El evento "clic" puede venir desde un botón de gamepad o toque en el touchpad de Gear VR.</p>
+	                
+	                <img src="assets/img/interacciones/cursores/gazePointer.png" class="img-responsive" width="730" style="margin-bottom: 60px; margin-top: 40px;">
+	                
+	                <h3 class="space-top"><strong>Cursor de visión con rastro</strong></h3>
+	                
+	                <!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+	                <img src="assets/img/interacciones/cursores/gazeCursoTrail.png" class="img-responsive" width="730" style="margin-bottom: 60px; margin-top: 40px;">
+			
+				</div>
+					
+	                 <h4><strong>Contexto</strong> </h4>
+	                 <h5>¿Que problema resuelve?</h5>
+	                <p>Mejora el seguimiento del cursor mientras el usario navega con el control de mirada.</p><br>
+	                <h4><strong>Solución</strong> </h4>
+	                <p>Dotar a el cursor de un rastro de partucilas cuando está en movimiento.</p><br>
+	                <h4><strong>Diseño</strong> </h4>
+	                <p>Ver ejemplo. <a href="examples/cursorTail/cursorTail.html">Video</a></p>
+	                <p>Ver ejemplo. <a href="http://">WEBGL</a></p> 
+	                
+	                <h3 class="space-top" style="margin-top: 60px;"><strong>Cursor que afecta a la malla y al entorno</strong></h3>
+	                <legend></legend>
+	                <p>Otra manera de dejar rastro es que el cursor interactue por defecto con el entorno afectando a la malla y al entorno. Esto depende mucho del contexto pero puede ayudar a crear experiencias muy interesantes e inmersivas (cesped, agua, mallas, arena, fichas)</p>
+	                
+	                <img src="assets/img/interacciones/cursores/gazeCurosorEnvironment.png" width="730" class="img-responsive space-top">
+					
+	                 <h4><strong>Contexto</strong> </h4>
+	                 <h5>¿Que problema resuelve?</h5>
+	                <p>Mejora el seguimiento del cursor mientras el usario navega con el control de mirada.</p><br>
+	                <h4><strong>Solución</strong> </h4>
+	                <p>Dotar a el cursor de un rastro de partucilas cuando está en movimiento.</p><br>
+	                <h4><strong>Diseño</strong> </h4>
+	                <p>Ver ejemplo. <a href="http://">Video</a></p>
+	                <p>Ver ejemplo. <a href="http://">WEBGL</a></p> 
+	                
+	               
+	        	</div>
+	    		<!--  end row -->
+
+	                <!-- end container -->
+	            </div>
+
+	        </div>
+	        </div>
+	    </div>
+	    </div>
+	    <footer class="footer footer-transparent">
+	        <div class="container">
+	            <nav class="pull-left">
+	                <ul>
+						<li>
+							<a href="https://labs.beeva.com/" target="_blank">
+								BBEVA labs
+							</a>
+						</li>
+						<li>
+							<a href="https://labs.beeva.com/about" target="_blank">
+							   About
+							</a>
+						</li>
+	                </ul>
+	            </nav>
+	            <div class="social-area pull-right">
+	                <a class="btn btn-social btn-twitter btn-simple" href="">
+	                    <i class="fa fa-twitter"></i>
+	                </a>
+	                <a class="btn btn-social btn-facebook btn-simple" href="">
+	                    <i class="fa fa-facebook-square"></i>
+	                </a>
+	                <a class="btn btn-social btn-google btn-simple" href="">
+	                    <i class="fa fa-google-plus"></i>
+	                </a>
+	            </div>
+	            <div class="copyright">
+	                &copy; 2017 BEEVA labs.
+	            </div>
+	        </div>
+	    </footer>
+
 	</div>
 
-    <div class="main main-raised">
-        <div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="fixed-section" data-spy="affix" data-offset-top="340">
-                    <ul>
-                        <li><a href="#cursores-row">Cursores</a></li>
-                        <li><a href="#precargas-row">Precargas</a></li>
-                        <li><a href="#video-row">Vídeo players</a></li>
-                        <li><a href="#elementos-row">Elementos accionables</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-8 col-md-offset-1">
-                <div class="tim-container">
-
-	    	<!-- cursores row -->
-	        <div class="tim-row" id="cursores-row">
-
-                <h2><strong>Cursores</strong></h2>
-                <legend>sdsadsad</legend>
-                <h3 class="space-top"><strong>Cursor de visión o gaze-pointer </strong></h3>
-                
-                <p>El gaze-pointer o puntero de mirada, es el puntero que el usuario controla con su orientación de cabeza e interactúa con objetos o elementos de interfaz de usuario como lo harían con un puntero del ratón. El evento "clic" puede venir desde un botón de gamepad o toque en el touchpad de Gear VR.</p>
-                
-                <img src="assets/img/interacciones/cursores/gazePointer.png" class="img-responsive" width="730" style="margin-bottom: 60px; margin-top: 40px;">
-                
-                <h3 class="space-top"><strong>Cursor de visión con rastro</strong></h3>
-                
-                <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> 
-		
-			</div>
-				
-                 <h4><strong>Contexto</strong> </h4>
-                 <h5>¿Que problema resuelve?</h5>
-                <p>Mejora el seguimiento del cursor mientras el usario navega con el control de mirada.</p><br>
-                <h4><strong>Solución</strong> </h4>
-                <p>Dotar a el cursor de un rastro de partucilas cuando está en movimiento.</p><br>
-                <h4><strong>Diseño</strong> </h4>
-                <p>Ver ejemplo. <a href="examples/cursorTail/cursorTail.html">Video</a></p>
-                <p>Ver ejemplo. <a href="http://">WEBGL</a></p> 
-                
-                <h3 class="space-top" style="margin-top: 60px;"><strong>Cursor que afecta a la malla y al entorno</strong></h3>
-                <legend></legend>
-                <p>Otra manera de dejar rastro es que el cursor interactue por defecto con el entorno afectando a la malla y al entorno. Esto depende mucho del contexto pero puede ayudar a crear experiencias muy interesantes e inmersivas (cesped, agua, mallas, arena, fichas)</p>
-                
-                <img src="assets/img/interacciones/cursores/gazeCurosorEnvironment.png" width="730" class="img-responsive space-top">
-				
-                 <h4><strong>Contexto</strong> </h4>
-                 <h5>¿Que problema resuelve?</h5>
-                <p>Mejora el seguimiento del cursor mientras el usario navega con el control de mirada.</p><br>
-                <h4><strong>Solución</strong> </h4>
-                <p>Dotar a el cursor de un rastro de partucilas cuando está en movimiento.</p><br>
-                <h4><strong>Diseño</strong> </h4>
-                <p>Ver ejemplo. <a href="http://">Video</a></p>
-                <p>Ver ejemplo. <a href="http://">WEBGL</a></p> 
-                
-               
-        	</div>
-    		<!--  end row -->
-
-                <!-- end container -->
-            </div>
-
-        </div>
-        </div>
-    </div>
-    </div>
-    <footer class="footer footer-transparent">
-        <div class="container">
-            <nav class="pull-left">
-                <ul>
-					<li>
-						<a href="https://labs.beeva.com/" target="_blank">
-							BBEVA labs
-						</a>
-					</li>
-					<li>
-						<a href="https://labs.beeva.com/about" target="_blank">
-						   About
-						</a>
-					</li>
-                </ul>
-            </nav>
-            <div class="social-area pull-right">
-                <a class="btn btn-social btn-twitter btn-simple" href="">
-                    <i class="fa fa-twitter"></i>
-                </a>
-                <a class="btn btn-social btn-facebook btn-simple" href="">
-                    <i class="fa fa-facebook-square"></i>
-                </a>
-                <a class="btn btn-social btn-google btn-simple" href="">
-                    <i class="fa fa-google-plus"></i>
-                </a>
-            </div>
-            <div class="copyright">
-                &copy; 2017 BEEVA labs.
-            </div>
-        </div>
-    </footer>
-
-</div>
-
-<script>
-w3IncludeHTML();
-</script>
+	<script>
+		w3IncludeHTML();
+	</script>
 
 </body>
 	<!--   Core JS Files   -->
