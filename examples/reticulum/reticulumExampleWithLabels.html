@@ -139,7 +139,7 @@ function addMesh(geo, x, y, z, i) {
 	object.position.z = z;
 	
 	var fuse = false;
-	var functionalityName = "This is functionality: " + i;
+	var functionalityName = "This is functionality: " + (i+1);
 	var spritey = makeTextSprite(functionalityName, 
 		{ fontsize: 24, borderColor: {r:255, g:100, b:100, a:0.8}, backgroundColor: {r:255, g:100, b:100, a:0.8} } );
 	spritey.position.set(object.position.x,object.position.y,object.position.z);
