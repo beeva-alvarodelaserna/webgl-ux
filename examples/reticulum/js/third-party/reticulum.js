@@ -129,6 +129,12 @@ var Reticulum = (function () {
 
     }
 
+    reticle.distanceTo = function( object ) {
+        console.log(object.position);
+        console.log(reticle.worldPosition);
+        return reticle.worldPosition.distanceTo(object.position);
+    }
+
     //Reticle
     reticle.initiate = function( options ) {
         var parameters = options || {};
