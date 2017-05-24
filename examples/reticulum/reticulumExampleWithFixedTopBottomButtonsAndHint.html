@@ -78,6 +78,7 @@
 <!-- A simple gaze interaction manager for VR -->
 <!--<script src="https://skezo.github.io/Reticulum/reticulum.js"></script>-->
 <script src="./js/third-party/reticulum.js"></script>
+<script type="text/javascript" src="./js/third-party/tween.js"></script>
 
 <script>
 // Setup three.js WebGL renderer
@@ -114,32 +115,49 @@ addSkyBox();
 var boxSize = 1;
 var radius = 3;
 var boxGeometry = new THREE.BoxGeometry( boxSize, boxSize, boxSize );
-var x = 0;
-var z = 0 + radius;  
-addMesh(boxGeometry, x, 0, z);
+// var x = 0;
+// var z = 0 + radius;  
+// addMesh(boxGeometry, x, 0, z);
+
+addMenuUpHint();
+addExitHint();
 addTopButtons();
+animateHints();
 
 var plane, container, buttonA, buttonB, buttonC, homeButton;
 function addTopButtons() {
   var geo = new THREE.BoxGeometry(1, 1, 0.1);
   // container = new THREE.Mesh( geo, new THREE.MeshLambertMaterial() );
-  container = new THREE.Group();
-  container.position.set(camera.position.x, camera.position.y + 3, camera.position.z);
-  scene.add(container);
+  // container = new THREE.Group();
+  // container.position.set(camera.position.x, camera.position.y + 3, camera.position.z);
+  // scene.add(container);
   addButtonHome()
   addButtonA();
   addButtonB();
   addButtonC();
 }
 
+function animateHints() {
+  var newX = menuUp.position.x;
+  var newZ = menuUp.position.z;
+  movement({x: newX, y: 5, z: newZ}, menuUp.position, 5000, 3000, TWEEN.Easing.Quartic.Out, function () {
+    parent.remove(menuUp);
+  });
+  newX = exitDown.position.x;
+  newZ = exitDown.position.z;
+  movement({x: newX, y: -5, z: newZ}, exitDown.position, 5000, 3000, TWEEN.Easing.Quartic.Out, function () {
+      parent.remove(exitDown);
+  });
+}
+
 function addButtonHome() {
   var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
     map:THREE.ImageUtils.loadTexture("assets/button_home.png"),
-    transparent: false,
+    transparent: true,
     color: 0xffffff
   });
   img.map.needsUpdate = true; //ADDED
-  homeButton = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.5), img);
+  homeButton = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.75), img);
   homeButton.position.set(camera.position.x, camera.position.y, camera.position.z);
 
   parent.add(homeButton);
@@ -149,13 +167,43 @@ function addButtonHome() {
     fuseVisible: true,
     onGazeOver: function() {
       if (this.material.opacity) this.material.opacity = 1;
-      changeScaleSingle(homeButton, 0.7);
+      changeScaleSingle(homeButton, 0.95);
     },
     onGazeOut: function() {
       if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
-      changeScaleSingle(homeButton, 0.5);
+      changeScaleSingle(homeButton, 0.75);
     }
   });
+}
+
+var menuUp;
+function addMenuUpHint() {
+  addExitHint();
+  var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+    map:THREE.ImageUtils.loadTexture("assets/menu_up.png"),
+    transparent: true,
+    color: 0xffffff
+  });
+  img.map.needsUpdate = true; //ADDED
+  menuUp = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.5), img);
+  menuUp.position.set(camera.position.x, camera.position.y + 1.9, camera.position.z - 1);
+
+  // container.add(menuUp);
+  parent.add(menuUp);
+}
+var exitDown;
+function addExitHint() {
+  var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+    map:THREE.ImageUtils.loadTexture("assets/exit_down.png"),
+    transparent: true,
+    color: 0xffffff
+  });
+  img.map.needsUpdate = true; //ADDED
+  exitDown = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.5), img);
+  exitDown.position.set(camera.position.x, camera.position.y + 1.3, camera.position.z - 1);
+
+  // container.add(exitDown);
+  parent.add(exitDown);
 }
 
 function addButtonA() {
@@ -165,10 +213,11 @@ function addButtonA() {
     color: 0xffffff
   });
   img.map.needsUpdate = true; //ADDED
-  buttonA = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.5), img);
+  buttonA = new THREE.Mesh(new THREE.PlaneGeometry(0.6,0.6), img);
   buttonA.position.set(camera.position.x + 1, camera.position.y + 3, camera.position.z);
 
-  container.add(buttonA);
+  // container.add(buttonA);
+  parent.add(buttonA);
   
   Reticulum.add( buttonA, {
     reticleHoverColor: 0x00fff6,
@@ -181,7 +230,7 @@ function addButtonA() {
     onGazeOut: function() {
       if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
       changeColor(buttonA, 0xffffff);
-      changeScaleSingle(buttonA, 0.5);
+      changeScaleSingle(buttonA, 0.6);
     }
   });
 }
@@ -196,7 +245,8 @@ function addButtonB() {
   buttonB = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.5), img);
   buttonB.position.set(camera.position.x, camera.position.y + 3, camera.position.z);
 
-  container.add(buttonB);
+  // container.add(buttonB);
+  parent.add(buttonB);
   
   Reticulum.add( buttonB, {
     reticleHoverColor: 0x00fff6,
@@ -224,7 +274,8 @@ function addButtonC() {
   buttonC = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.5), img);
   buttonC.position.set(camera.position.x -  1, camera.position.y + 3, camera.position.z);
 
-  container.add(buttonC);
+  // container.add(buttonC);
+  parent.add(buttonC);
   
   Reticulum.add( buttonC, {
     reticleHoverColor: 0x00fff6,
@@ -322,17 +373,21 @@ function animate(timestamp) {
   controls.update();
   camera.updateMatrixWorld(); // Required to stop ghosting - must be placed before render update
 
-  container.rotation.setFromRotationMatrix(camera.matrix);
+  // container.rotation.setFromRotationMatrix(camera.matrix);
   homeButton.rotation.setFromRotationMatrix(camera.matrix);
-  // buttonB.rotation.setFromRotationMatrix(camera.matrix);
-  // buttonC.rotation.setFromRotationMatrix(camera.matrix);
+  buttonA.rotation.setFromRotationMatrix(camera.matrix);
+  buttonB.rotation.setFromRotationMatrix(camera.matrix);
+  buttonC.rotation.setFromRotationMatrix(camera.matrix);
 
   manager.render(scene, camera, timestamp);
-  container.lookAt(camera.position);
+  // container.lookAt(camera.position);
   homeButton.lookAt(camera.position);
-  // buttonB.lookAt(camera.position);
-  // buttonC.lookAt(camera.position);
+  buttonA.lookAt(camera.position);
+  buttonB.lookAt(camera.position);
+  buttonC.lookAt(camera.position);
   requestAnimationFrame(animate);
+
+  TWEEN.update();
 }
 
 animate();
@@ -347,6 +402,18 @@ function changeScale(object, scaleX, scaleY, scaleZ) {
 
 function changeScaleSingle(object, scale) {
   changeScale(object, scale, scale, scale);
+}
+
+function movement(value, object, delay, duration, easingType, callback) {
+  //var easingType = TWEEN.Easing.Back.Out;
+  var tween = new TWEEN.Tween(object)
+    .to(value, duration)
+    .easing(easingType)
+    .delay(delay)
+    .onComplete(function() {
+      if (callback) callback();
+    })
+    .start();
 }
 /*
 Handle window resizes
