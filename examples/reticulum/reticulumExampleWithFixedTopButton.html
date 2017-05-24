@@ -19,9 +19,6 @@
 </head>
 
 <body>
-<div id="overlay">
-    <div>Label: <span id="objLabel"></span></div>
-  </div>
 <script>
     /*
      * Debug parameters.
@@ -112,39 +109,37 @@ scene.add(hemiLight);
 //Boxes, Planes and spheres
 var parent = new THREE.Object3D();
 scene.add( parent );
-var distancesFromReticleToObject = [];
 
-var boxCount = 10;
 var boxSize = 1;
-var radius = 10;
+var radius = 3;
 var boxGeometry = new THREE.BoxGeometry( boxSize, boxSize, boxSize );
 
-var radius = 3;
 addSkyBox();
-//for( var i =0; i < boxCount; i++ ) {
-    var x = 0 + radius;
-    var z = 0 ;  
-    addMesh(boxGeometry, x, 0, z);
-    addButton();
-//}
+var x = 0;
+var z = 0 + radius;  
+addMesh(boxGeometry, x, 0, z);
+addButton();
 
 var plane;
 function addButton() {
   var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
     map:THREE.ImageUtils.loadTexture("assets/actionButton.png"),
     transparent: true,
-    color: 0x000000
+    color: 0xffffff
   });
   img.map.needsUpdate = true; //ADDED
-  plane = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.4), img);
-  plane.position.set(camera.position.x, camera.position.y + 2.5, camera.position.z);
+  plane = new THREE.Mesh(new THREE.PlaneGeometry(0.55, 0.27), img);
+  plane.position.set(camera.position.x, camera.position.y + 2, camera.position.z);
   parent.add(plane);
   
   Reticulum.add( plane, {
     reticleHoverColor: 0x00fff6,
     fuseVisible: true,
     onGazeOver: function() {
-      if (this.material.color) this.material.color.setHex( 0xffcc00 );
+      if (this.material.opacity) this.material.opacity = 1;
+    },
+    onGazeOut: function() {
+      if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
     }
   });
 }
@@ -184,10 +179,6 @@ function addMesh(geo, x, y, z) {
         // do something when user moves reticle off targeted object
         this.material.emissive.setHex( 0xcc0000 );
         //spritey.visible = false;
-      },
-      onGazeLong: function(){
-      },
-      onGazeClick: function(){
       }
   });
   parent.add( object );
@@ -245,12 +236,11 @@ var reticle;
 function animate(timestamp) {
   var delta = clock.getDelta();
 
-  // *******************************
-  // --- Reticulum ---
-  // keep checking if user is looking at any tracked objects
   Reticulum.update();
   controls.update();
   camera.updateMatrixWorld(); // Required to stop ghosting - must be placed before render update
+
+  plane.rotation.setFromRotationMatrix(camera.matrix);
 
   manager.render(scene, camera, timestamp);
   plane.lookAt(camera.position);
