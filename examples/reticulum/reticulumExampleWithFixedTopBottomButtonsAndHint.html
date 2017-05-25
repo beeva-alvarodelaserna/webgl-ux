@@ -107,6 +107,8 @@ var hemiLight = new THREE.HemisphereLight(0x0000ff, 0x00ff00, 0.6);
 hemiLight.position.set(0, 500, 0);
 scene.add(hemiLight);
 
+var ambientlight = new THREE.AmbientLight( 0xffffff ); // soft white light
+scene.add( ambientlight );
 //Boxes, Planes and spheres
 var parent = new THREE.Object3D();
 scene.add( parent );
@@ -122,31 +124,114 @@ var boxGeometry = new THREE.BoxGeometry( boxSize, boxSize, boxSize );
 addMenuUpHint();
 addExitHint();
 addTopButtons();
+addButtonHome();
 animateHints();
 
-var plane, container, buttonA, buttonB, buttonC, homeButton;
+var plane, container, buttonA, buttonB, buttonC, homeButton, distanceToCamera;
 function addTopButtons() {
-  var geo = new THREE.BoxGeometry(1, 1, 0.1);
-  // container = new THREE.Mesh( geo, new THREE.MeshLambertMaterial() );
-  // container = new THREE.Group();
-  // container.position.set(camera.position.x, camera.position.y + 3, camera.position.z);
-  // scene.add(container);
-  addButtonHome()
-  addButtonA();
-  addButtonB();
-  addButtonC();
+  // var geometry = new THREE.BoxGeometry(0.6,0.6,0.6);
+  var geometry = new THREE.PlaneGeometry(0.6,0.6);
+  
+  container = new THREE.Object3D();
+  container.position.set(camera.position.x, camera.position.y + 3, camera.position.z - 1);
+  // addButtonA();
+  var textureLoader = new THREE.TextureLoader();;
+  var material = new THREE.MeshBasicMaterial({
+    map:  textureLoader.load("assets/button_a.png"),
+    color: 0xffffff,
+    transparent: true
+  });
+  material.map.needsUpdate = true;
+  
+  buttonA = new THREE.Mesh(geometry, material);
+  changeScaleSingle(buttonA, 0.6);
+  buttonA.position.set(camera.position.x - 0.5, camera.position.y, camera.position.z);
+
+  container.add(buttonA);
+  
+  Reticulum.add( buttonA, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeColor(buttonA, 0x00fff6);
+      changeScaleSingle(buttonA, 0.7);
+    },
+    onGazeOut: function() {
+      changeColor(buttonA, 0xffffff);
+      changeScaleSingle(buttonA, 0.6);
+    }
+  });
+
+  //addButtonB();
+  material = new THREE.MeshBasicMaterial({
+    map: textureLoader.load("assets/button_b.png"),
+    color: 0xffffff,
+    transparent: true
+  });
+  material.map.needsUpdate = true;
+  buttonB = new THREE.Mesh(geometry, material);
+  changeScaleSingle(buttonB, 0.6);
+  buttonB.position.set(camera.position.x, camera.position.y, camera.position.z);
+
+  container.add(buttonB);
+  
+  Reticulum.add( buttonB, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeColor(buttonB, 0x00fff6);
+      changeScaleSingle(buttonB, 0.7);
+    },
+    onGazeOut: function() {
+      changeColor(buttonB, 0xffffff);
+      changeScaleSingle(buttonB, 0.6);
+    }
+  });
+  
+  // addButtonC();
+  material = new THREE.MeshBasicMaterial({
+    map: textureLoader.load("assets/button_c.png"),
+    color: 0xffffff,
+    transparent: true
+  });
+  material.map.needsUpdate = true;
+  buttonC = new THREE.Mesh(geometry, material);
+  changeScaleSingle(buttonC, 0.6);
+  buttonC.position.set(camera.position.x + 0.5, camera.position.y, camera.position.z);
+
+  container.add(buttonC);
+  
+  Reticulum.add( buttonC, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeColor(buttonC, 0x00fff6);
+      changeScaleSingle(buttonC, 0.7);
+    },
+    onGazeOut: function() {
+      changeColor(buttonC, 0xffffff);
+      changeScaleSingle(buttonC, 0.6);
+    }
+  });
+  
+  scene.add(container);
+
+  distanceToCamera = distance(container.position, { x: 0, y: container.position.y, z: 0 });
+  // console.log('distanceToCamera', distanceToCamera);
 }
 
 function animateHints() {
   var newX = menuUp.position.x;
   var newZ = menuUp.position.z;
-  movement({x: newX, y: 5, z: newZ}, menuUp.position, 5000, 3000, TWEEN.Easing.Quartic.Out, function () {
-    parent.remove(menuUp);
+  movement({x: newX, y: 15, z: newZ}, menuUp.position, 2000, 2000, TWEEN.Easing.Quartic.Out, function () {
+    // parent.remove(menuUp);
+    scene.remove(menuUp);
   });
   newX = exitDown.position.x;
   newZ = exitDown.position.z;
-  movement({x: newX, y: -5, z: newZ}, exitDown.position, 5000, 3000, TWEEN.Easing.Quartic.Out, function () {
-      parent.remove(exitDown);
+  movement({x: newX, y: -15, z: newZ}, exitDown.position, 2000, 2000, TWEEN.Easing.Quartic.Out, function () {
+    // parent.remove(exitDown);
+    scene.remove(exitDown);
   });
 }
 
@@ -166,11 +251,9 @@ function addButtonHome() {
     reticleHoverColor: 0x00fff6,
     fuseVisible: true,
     onGazeOver: function() {
-      if (this.material.opacity) this.material.opacity = 1;
       changeScaleSingle(homeButton, 0.95);
     },
     onGazeOut: function() {
-      if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
       changeScaleSingle(homeButton, 0.75);
     }
   });
@@ -178,7 +261,6 @@ function addButtonHome() {
 
 var menuUp;
 function addMenuUpHint() {
-  addExitHint();
   var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
     map:THREE.ImageUtils.loadTexture("assets/menu_up.png"),
     transparent: true,
@@ -188,8 +270,8 @@ function addMenuUpHint() {
   menuUp = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.5), img);
   menuUp.position.set(camera.position.x, camera.position.y + 1.9, camera.position.z - 1);
 
-  // container.add(menuUp);
-  parent.add(menuUp);
+  // parent.add(menuUp);
+  scene.add(menuUp);
 }
 var exitDown;
 function addExitHint() {
@@ -202,95 +284,8 @@ function addExitHint() {
   exitDown = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.5), img);
   exitDown.position.set(camera.position.x, camera.position.y + 1.3, camera.position.z - 1);
 
-  // container.add(exitDown);
-  parent.add(exitDown);
-}
-
-function addButtonA() {
-  var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-    map:THREE.ImageUtils.loadTexture("assets/button_a.png"),
-    transparent: true,
-    color: 0xffffff
-  });
-  img.map.needsUpdate = true; //ADDED
-  buttonA = new THREE.Mesh(new THREE.PlaneGeometry(0.6,0.6), img);
-  buttonA.position.set(camera.position.x + 1, camera.position.y + 3, camera.position.z);
-
-  // container.add(buttonA);
-  parent.add(buttonA);
-  
-  Reticulum.add( buttonA, {
-    reticleHoverColor: 0x00fff6,
-    fuseVisible: true,
-    onGazeOver: function() {
-      if (this.material.opacity) this.material.opacity = 1;
-      changeColor(buttonA, 0x00fff6);
-      changeScaleSingle(buttonA, 0.7);
-    },
-    onGazeOut: function() {
-      if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
-      changeColor(buttonA, 0xffffff);
-      changeScaleSingle(buttonA, 0.6);
-    }
-  });
-}
-
-function addButtonB() {
-  var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-    map:THREE.ImageUtils.loadTexture("assets/button_b.png"),
-    transparent: true,
-    color: 0xffffff
-  });
-  img.map.needsUpdate = true; //ADDED
-  buttonB = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.5), img);
-  buttonB.position.set(camera.position.x, camera.position.y + 3, camera.position.z);
-
-  // container.add(buttonB);
-  parent.add(buttonB);
-  
-  Reticulum.add( buttonB, {
-    reticleHoverColor: 0x00fff6,
-    fuseVisible: true,
-    onGazeOver: function() {
-      if (this.material.opacity) this.material.opacity = 1;
-      changeColor(buttonB, 0x00fff6);
-      changeScaleSingle(buttonB, 0.7);
-    },
-    onGazeOut: function() {
-      if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
-      changeColor(buttonB, 0xffffff);
-      changeScaleSingle(buttonB, 0.5);
-    }
-  });
-}
-
-function addButtonC() {
-  var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-    map:THREE.ImageUtils.loadTexture("assets/button_c.png"),
-    transparent: true,
-    color: 0xffffff
-  });
-  img.map.needsUpdate = true; //ADDED
-  buttonC = new THREE.Mesh(new THREE.PlaneGeometry(0.75,0.5), img);
-  buttonC.position.set(camera.position.x -  1, camera.position.y + 3, camera.position.z);
-
-  // container.add(buttonC);
-  parent.add(buttonC);
-  
-  Reticulum.add( buttonC, {
-    reticleHoverColor: 0x00fff6,
-    fuseVisible: true,
-    onGazeOver: function() {
-      if (this.material.opacity) this.material.opacity = 1;
-      changeColor(buttonC, 0x00fff6);
-      changeScaleSingle(buttonC, 0.7);
-    },
-    onGazeOut: function() {
-      if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
-      changeColor(buttonC, 0xffffff);
-      changeScaleSingle(buttonC, 0.5);
-    }
-  });
+  // parent.add(exitDown);
+  scene.add(exitDown);
 }
 
 function addSkyBox() {
@@ -334,31 +329,31 @@ function addMesh(geo, x, y, z) {
 }
 
 Reticulum.init(camera, {
-    proximity: false,
-    clickevents: true,
-    reticle: {
-        visible: true,
-        restPoint: 1, //Defines the reticle's resting point when no object has been targeted
-        color: 0xcc0000,
-        innerRadius: 0.0001,
-        outerRadius: 0.003,
-        hover: {
-            color: 0xcc0000,
-            innerRadius: 0.02,
-            outerRadius: 0.024,
-            speed: 5,
-            vibrate: 50 //Set to 0 or [] to disable
-        }
-    },
-    fuse: {
-        visible: false,
-        duration: 2,
-        color: 0x00fff6,
-        innerRadius: 0.045,
-        outerRadius: 0.06,
-        vibrate: 100, //Set to 0 or [] to disable
-        clickCancelFuse: false //If users clicks on targeted object fuse is canceled
+  proximity: false,
+  clickevents: true,
+  reticle: {
+    visible: true,
+    restPoint: 1, //Defines the reticle's resting point when no object has been targeted
+    color: 0xcc0000,
+    innerRadius: 0.0001,
+    outerRadius: 0.003,
+    hover: {
+      color: 0xcc0000,
+      innerRadius: 0.02,
+      outerRadius: 0.024,
+      speed: 5,
+      vibrate: 50 //Set to 0 or [] to disable
     }
+  },
+  fuse: {
+    visible: false,
+    duration: 2,
+    color: 0x00fff6,
+    innerRadius: 0.045,
+    outerRadius: 0.06,
+    vibrate: 100, //Set to 0 or [] to disable
+    clickCancelFuse: false //If users clicks on targeted object fuse is canceled
+  }
 });
 
 // IMPORTANT add camera to scene if you want to see a reticle 
@@ -373,27 +368,66 @@ function animate(timestamp) {
   controls.update();
   camera.updateMatrixWorld(); // Required to stop ghosting - must be placed before render update
 
-  // container.rotation.setFromRotationMatrix(camera.matrix);
+  container.rotation.setFromRotationMatrix(camera.matrix);
   homeButton.rotation.setFromRotationMatrix(camera.matrix);
-  buttonA.rotation.setFromRotationMatrix(camera.matrix);
-  buttonB.rotation.setFromRotationMatrix(camera.matrix);
-  buttonC.rotation.setFromRotationMatrix(camera.matrix);
+  // buttonA.rotation.setFromRotationMatrix(camera.matrix);
+  // buttonB.rotation.setFromRotationMatrix(camera.matrix);
+  // buttonC.rotation.setFromRotationMatrix(camera.matrix);
 
   manager.render(scene, camera, timestamp);
-  // container.lookAt(camera.position);
+  container.lookAt(camera.position);
   homeButton.lookAt(camera.position);
-  buttonA.lookAt(camera.position);
-  buttonB.lookAt(camera.position);
-  buttonC.lookAt(camera.position);
+  // buttonA.lookAt(camera.position);
+  // buttonB.lookAt(camera.position);
+  // buttonC.lookAt(camera.position);
   requestAnimationFrame(animate);
+
+  var headElevation = camera.rotation.x;
+  // console.log('distanceToCamera', camera.rotation.y);
+  
+  updateMenuOpacity(headElevation);
 
   TWEEN.update();
 }
 
 animate();
 
+function updateMenuOpacity(radians) {
+  var opacity = radiansToOpacity(radians);
+  buttonA.material.opacity = opacity;
+  buttonB.material.opacity = opacity;
+  buttonC.material.opacity = opacity;
+}
+
+function updateMenuPosition(rotation) {
+  container.position.x = camera.position.x - distanceToCamera * Math.cos(camera.rotation.y);
+  container.position.z = camera.position.y + 3;
+  container.position.z = camera.position.z - 1 - distanceToCamera * Math.sin(camera.rotation.y);
+}
+
+function radiansToOpacity(radians) {
+  var menuPosition = 0.96;
+  var minOpacity = 0.2;
+  var maxOpacity = 1;
+  if (radians <= 0) {
+    return minOpacity;
+  } else if (radians > menuPosition + 0.2) {
+    var result = menuPosition*radians/maxOpacity - maxOpacity;
+    if (result < minOpacity) {
+      result = minOpacity;
+    }
+    return result;
+  } else {
+    return menuPosition*radians/maxOpacity;
+  }
+}
+
 function changeColor(object, colorHex) {
-  if (object.material.emissive) object.material.emissive.setHex( colorHex );
+  if (object.material.emissive) {
+    object.material.emissive.setHex( colorHex );
+  } else if (object.material.color) {
+    object.material.color.setHex( colorHex );
+  }
 }
 
 function changeScale(object, scaleX, scaleY, scaleZ) {
@@ -402,6 +436,13 @@ function changeScale(object, scaleX, scaleY, scaleZ) {
 
 function changeScaleSingle(object, scale) {
   changeScale(object, scale, scale, scale);
+}
+
+function distance(positionA, positionB) {
+    var difX = positionA.x-positionB.x;
+    var difY = positionA.y-positionB.y;
+    var difZ = positionA.z-positionB.z;
+    return Math.sqrt(difX*difX + difY*difY + difZ*difZ);
 }
 
 function movement(value, object, delay, duration, easingType, callback) {
