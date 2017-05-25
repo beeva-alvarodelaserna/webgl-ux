@@ -137,9 +137,11 @@ function addButton() {
     fuseVisible: true,
     onGazeOver: function() {
       if (this.material.opacity) this.material.opacity = 1;
+      changeScaleSingle(plane, 0.7);
     },
     onGazeOut: function() {
       if (this.material.opacity) this.material.opacity = 1 + Math.sin(new Date().getTime() * .0025);
+      changeScaleSingle(plane, 0.5);
     }
   });
 }
@@ -184,22 +186,6 @@ function addMesh(geo, x, y, z) {
   parent.add( object );
 }
 
-var rotWorldMatrix;
-// Rotate an object around an arbitrary axis in world space       
-function rotateAroundWorldAxis(object, axis, radians) {
-    rotWorldMatrix = new THREE.Matrix4();
-    rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
-
-    rotWorldMatrix.multiply(object.matrix);
-
-    object.matrix = rotWorldMatrix;
-
-    object.rotation.setFromRotationMatrix(object.matrix);
-}
-
-// *******************************
-// --- Reticulum ---
-// initiate Reticulum so it loads up 
 Reticulum.init(camera, {
     proximity: false,
     clickevents: true,
@@ -249,7 +235,17 @@ function animate(timestamp) {
 
 animate();
 
+function changeColor(object, colorHex) {
+  object.material.emissive.setHex( colorHex );
+}
 
+function changeScale(object, scaleX, scaleY, scaleZ) {
+  object.scale.set(scaleX, scaleY, scaleZ);
+}
+
+function changeScaleSingle(object, scale) {
+  changeScale(object, scale, scale, scale);
+}
 /*
 Handle window resizes
 */
