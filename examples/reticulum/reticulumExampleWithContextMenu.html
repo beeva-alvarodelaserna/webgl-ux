@@ -248,6 +248,14 @@ function showMenu() {
   changeScaleSingle(menuAction1, 0.7);
   changeScaleSingle(menuAction2, 0.7);
   menuIsShowing = true;
+  saveMenuRotationValue();
+}
+
+var menuRotationValue;
+function saveMenuRotationValue() {
+  menuRotationValue = new THREE.Object3D();
+  menuRotationValue.rotation.copy(camera.rotation);
+  console.log('menuRotationValue', menuRotationValue.rotation.y);
 }
 
 function hideMenu() {
@@ -264,6 +272,7 @@ function hideMenu() {
     menuAction2.visible = false;
   });
   menuIsShowing = false;
+  menuRotationValue = undefined;
 }
 
 Reticulum.init(camera, {
@@ -313,6 +322,13 @@ function animate(timestamp) {
   requestAnimationFrame(animate);
 
   TWEEN.update();
+
+  console.log(camera.rotation.y);
+  if (menuRotationValue && menuRotationValue.rotation)
+    console.log(menuRotationValue.rotation.y);
+  if (menuRotationValue && menuRotationValue.rotation && (menuRotationValue.rotation.y < camera.rotation.y - 0.25 || menuRotationValue.rotation.y > camera.rotation.y + 0.25)) {
+    hideMenu();
+  }
 }
 
 animate();
@@ -339,6 +355,13 @@ function movement(value, object, delay, duration, easingType, callback) {
       if (callback) callback();
     })
     .start();
+}
+
+function distance(positionA, positionB) {
+    var difX = positionA.x-positionB.x;
+    var difY = positionA.y-positionB.y;
+    var difZ = positionA.z-positionB.z;
+    return Math.sqrt(difX*difX + difY*difY + difZ*difZ);
 }
 /*
 Handle window resizes
