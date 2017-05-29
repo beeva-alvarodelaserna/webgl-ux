@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Reticulum | Fuse VR Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<style type="text/css">
+    html, body {
+        background-color: #000;
+        margin: 0;
+        padding: 0; 
+        overflow: hidden;
+    }
+</style>
+</head>
+
+<body>
+<script>
+    /*
+     * Debug parameters.
+     */
+    WebVRConfig = {
+      /**
+       * webvr-polyfill configuration
+       */
+      // Forces availability of VR mode.
+      //FORCE_ENABLE_VR: true, // Default: false.
+      
+      // Complementary filter coefficient. 0 for accelerometer, 1 for gyro.
+      //K_FILTER: 0.98, // Default: 0.98.
+      
+      // How far into the future to predict during fast motion.
+      //PREDICTION_TIME_S: 0.040, // Default: 0.040 (in seconds).
+      
+      // Flag to disable touch panner. In case you have your own touch controls
+      //TOUCH_PANNER_DISABLED: true, // Default: false.
+      
+      // Enable yaw panning only, disabling roll and pitch. This can be useful for
+      // panoramas with nothing interesting above or below.
+      //YAW_ONLY: true, // Default: false.
+
+      // Enable the deprecated version of the API (navigator.getVRDevices).
+      //ENABLE_DEPRECATED_API: true, // Default: false.
+      
+      // Scales the recommended buffer size reported by WebVR, which can improve
+      // performance. Making this very small can lower the effective resolution of
+      // your scene.
+      BUFFER_SCALE: 0.5, // default: 1.0
+      
+      // Allow VRDisplay.submitFrame to change gl bindings, which is more
+      // efficient if the application code will re-bind it's resources on the
+      // next frame anyway.
+      // Dirty bindings include: gl.FRAMEBUFFER_BINDING, gl.CURRENT_PROGRAM,
+      // gl.ARRAY_BUFFER_BINDING, gl.ELEMENT_ARRAY_BUFFER_BINDING,
+      // and gl.TEXTURE_BINDING_2D for texture unit 0
+      // Warning: enabling this might lead to rendering issues.
+      //DIRTY_SUBMIT_FRAME_BINDINGS: true // default: false
+    };
+</script>
+
+<!-- THREE library, controls and effects -->
+<script src="https://skezo.github.io/Reticulum/examples/js/lib/three.js"></script>
+<script src="https://skezo.github.io/Reticulum/examples/js/lib/VRControls.js"></script>
+<script src="https://skezo.github.io/Reticulum/examples/js/lib/VREffect.js"></script>
+<script src="https://raw.githubusercontent.com/jeromeetienne/threex.proceduralcity/master/threex.proceduralcity.js"></script>
+<script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/controls/FirstPersonControls.js"></script>
+<script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/controls/DeviceOrientationControls.js"></script>
+<script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/effects/StereoEffect.js"></script>
+<script src="https://github.com/mrdoob/three.js/blob/master/src/cameras/StereoCamera.js"></script>
+
+<!-- WebVR polyfill and manager -->
+<script src="https://skezo.github.io/Reticulum/examples/js/lib/webvr-polyfill.js"></script>
+<script src="https://skezo.github.io/Reticulum/examples/js/lib/webvr-manager.js"></script>
+<!-- A simple gaze interaction manager for VR -->
+<!--<script src="https://skezo.github.io/Reticulum/reticulum.js"></script>-->
+<script src="./js/third-party/reticulum.js"></script>
+<script type="text/javascript" src="./js/third-party/tween.js"></script>
+
+<script>
+// Setup three.js WebGL renderer
+var renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.setPixelRatio( window.devicePixelRatio );
+// Append the canvas element created by the renderer to document body element.
+document.body.appendChild( renderer.domElement );
+
+//Create a three.js scene
+var scene = new THREE.Scene();
+
+//Create a three.js camera
+var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.3, 10000);
+//Apply VR headset positional data to camera.
+var controls = new THREE.VRControls( camera );
+controls.standing = true;
+
+//Apply VR stereo rendering to renderer
+var effect = new THREE.VREffect( renderer );
+effect.setSize( window.innerWidth, window.innerHeight );
+
+// Create a VR manager helper to enter and exit VR mode.
+var manager = new WebVRManager( renderer, effect, {hideButton: false} );
+
+var hemiLight = new THREE.HemisphereLight(0x0000ff, 0x00ff00, 0.6);
+hemiLight.position.set(0, 500, 0);
+scene.add(hemiLight);
+
+//Boxes, Planes and spheres
+var parent = new THREE.Object3D();
+scene.add( parent );
+
+var boxSize = 1;
+var radius = 3;
+var boxGeometry = new THREE.BoxGeometry( boxSize, boxSize, boxSize );
+
+var textureLoader = new THREE.TextureLoader();
+addSkyBox();
+var x = 0;
+var z = 0 - radius;
+addMenu();
+addMesh(boxGeometry, x, 0, z);
+
+var plane, menuAction1, menuAction2, menuAction3;
+var menu;
+function addMenu() {
+  menu = new THREE.Group();
+  var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+    map: textureLoader.load("assets/actionButton.png"),
+    transparent: false,
+    depthWrite: false,
+    color: 0xffffff
+  });
+  img.map.needsUpdate = true; //ADDED
+  plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), img);
+  changeScaleSingle(plane, 0.5);
+  plane.visible = false;
+  plane.position.set(0, 0, -3.1);
+  
+  Reticulum.add( plane, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeScaleSingle(plane, 0.8);
+    },
+    onGazeOut: function() {
+      changeScaleSingle(plane, 0.7);
+    }
+  });
+  menuAction1 = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), img);
+  changeScaleSingle(menuAction1, 0.5);
+  menuAction1.visible = false;
+  menuAction1.position.set(0, 0, -3.1);
+  
+  Reticulum.add( menuAction1, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeScaleSingle(menuAction1, 0.8);
+    },
+    onGazeOut: function() {
+      changeScaleSingle(menuAction1, 0.7);
+    }
+  });
+  menuAction2 = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), img);
+  changeScaleSingle(menuAction2, 0.5);
+  menuAction2.visible = false;
+  menuAction2.position.set(0, 0, -3.1);
+  
+  Reticulum.add( menuAction2, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeScaleSingle(menuAction2, 0.8);
+    },
+    onGazeOut: function() {
+      changeScaleSingle(menuAction2, 0.7);
+    }
+  });
+
+  parent.add(plane);
+  parent.add(menuAction1);
+  parent.add(menuAction2);
+}
+
+function addSkyBox() {
+  var materialArray = [];
+  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( 'assets/ame_ash/ashcanyon_lf.png' ) }));
+  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( 'assets/ame_ash/ashcanyon_rt.png' ) }));
+  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( 'assets/ame_ash/ashcanyon_up.png' ) }));
+  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( 'assets/ame_ash/ashcanyon_dn.png' ) }));
+  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( 'assets/ame_ash/ashcanyon_ft.png' ) }));
+  materialArray.push(new THREE.MeshBasicMaterial( { map: textureLoader.load( 'assets/ame_ash/ashcanyon_bk.png' ) }));
+  for (var i = 0; i < 6; i++)
+     materialArray[i].side = THREE.DoubleSide;
+     // materialArray[i].side = THREE.BackSide;
+  var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
+  var skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
+  var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
+  parent.add( skybox );
+}
+
+var object;
+function addMesh(geo, x, y, z) {
+  object = new THREE.Mesh( geo, new THREE.MeshLambertMaterial( { 
+    color: Math.random() * 0xffffff,
+    depthWrite: true 
+  } ) );    
+  object.position.x = x;
+  object.position.y = y;
+  object.position.z = z;    
+
+  Reticulum.add( object, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: false,
+    onGazeOver: function(){
+      if (menuIsShowing) {
+        hideMenu();
+      } else {
+        showMenu();
+      }
+    },
+    onGazeClick: function(){
+//      if (menuIsShowing) {
+//        hideMenu();
+//      } else {
+//        showMenu();
+//      }
+    }
+  });
+  parent.add( object );
+}
+
+var menuIsShowing = true;
+function showMenu() {
+  plane.visible = true;
+  menuAction1.visible = true;
+  menuAction2.visible = true;
+  movement({x: 0, y: 1.5, z: -3.1}, plane.position, 0, 500, TWEEN.Easing.Quartic.Out);
+  movement({x: 0, y: 1.5, z: -3.1}, menuAction1.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    movement({x: 0, y: 2.3, z: -3.1}, menuAction1.position, 0, 500, TWEEN.Easing.Quartic.Out);
+  });
+  movement({x: 0, y: 1.5, z: -3.1}, menuAction2.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    movement({x: 0.8, y: 2.3, z: -3.1}, menuAction2.position, 0, 500, TWEEN.Easing.Quartic.Out);
+  });
+  changeScaleSingle(plane, 0.7);
+  changeScaleSingle(menuAction1, 0.7);
+  changeScaleSingle(menuAction2, 0.7);
+  menuIsShowing = true;
+  saveMenuRotationValue();
+}
+
+var menuRotationValue;
+function saveMenuRotationValue() {
+  menuRotationValue = new THREE.Object3D();
+  menuRotationValue.rotation.copy(camera.rotation);
+  console.log('menuRotationValue', menuRotationValue.rotation.y);
+}
+
+function hideMenu() {
+  changeScaleSingle(plane, 0.5);
+  changeScaleSingle(menuAction1, 0.5);
+  changeScaleSingle(menuAction2, 0.5);
+  movement({x: 0, y: 0, z: -3.1}, plane.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    plane.visible = false;
+  });
+  movement({x: 0, y: 0, z: -3.1}, menuAction1.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    menuAction1.visible = false;
+  });
+  movement({x: 0, y: 0, z: -3.1}, menuAction2.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    menuAction2.visible = false;
+  });
+  menuIsShowing = false;
+  menuRotationValue = undefined;
+}
+
+Reticulum.init(camera, {
+  proximity: false,
+  clickevents: true,
+  reticle: {
+    visible: true,
+    restPoint: 1, //Defines the reticle's resting point when no object has been targeted
+    color: 0xcc0000,
+    innerRadius: 0.0001,
+    outerRadius: 0.003,
+    hover: {
+      color: 0xcc0000,
+      innerRadius: 0.02,
+      outerRadius: 0.024,
+      speed: 5,
+      vibrate: 50 //Set to 0 or [] to disable
+    }
+  },
+  fuse: {
+    visible: false,
+    duration: 2,
+    color: 0x00fff6,
+    innerRadius: 0.045,
+    outerRadius: 0.06,
+    vibrate: 100, //Set to 0 or [] to disable
+    clickCancelFuse: false //If users clicks on targeted object fuse is canceled
+  }
+});
+
+// IMPORTANT add camera to scene if you want to see a reticle 
+scene.add(camera);
+
+var clock = new THREE.Clock(true);
+var reticle;
+function animate(timestamp) {
+  var delta = clock.getDelta();
+
+  Reticulum.update();
+  controls.update();
+  camera.updateMatrixWorld(); // Required to stop ghosting - must be placed before render update
+
+  manager.render(scene, camera, timestamp);
+  plane.lookAt(camera.position);
+  menuAction1.lookAt(camera.position);
+  menuAction2.lookAt(camera.position);
+  requestAnimationFrame(animate);
+
+  TWEEN.update();
+
+  console.log(camera.rotation.y);
+  if (menuRotationValue && menuRotationValue.rotation)
+    console.log(menuRotationValue.rotation.y);
+  if (menuRotationValue && menuRotationValue.rotation && (menuRotationValue.rotation.y < camera.rotation.y - 0.25 || menuRotationValue.rotation.y > camera.rotation.y + 0.25)) {
+    hideMenu();
+  }
+}
+
+animate();
+
+function changeColor(object, colorHex) {
+  object.material.emissive.setHex( colorHex );
+}
+
+function changeScale(object, scaleX, scaleY, scaleZ) {
+  object.scale.set(scaleX, scaleY, scaleZ);
+}
+
+function changeScaleSingle(object, scale) {
+  changeScale(object, scale, scale, scale);
+}
+
+function movement(value, object, delay, duration, easingType, callback) {
+  //var easingType = TWEEN.Easing.Back.Out;
+  var tween = new TWEEN.Tween(object)
+    .to(value, duration)
+    .easing(easingType)
+    .delay(delay)
+    .onComplete(function() {
+      if (callback) callback();
+    })
+    .start();
+}
+
+function distance(positionA, positionB) {
+    var difX = positionA.x-positionB.x;
+    var difY = positionA.y-positionB.y;
+    var difZ = positionA.z-positionB.z;
+    return Math.sqrt(difX*difX + difY*difY + difZ*difZ);
+}
+/*
+Handle window resizes
+*/
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  effect.setSize( window.innerWidth, window.innerHeight );
+}
+window.addEventListener( 'resize', onWindowResize, false );
+window.addEventListener( 'vrdisplaypresentchange', onWindowResize, true );
+</script>
+</body>
+</html>

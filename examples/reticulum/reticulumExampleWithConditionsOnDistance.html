@@ -132,8 +132,9 @@ for( var i =0; i < boxCount; i++ ) {
 
 function distance(positionA, positionB) {
     var difX = positionA.x-positionB.x;
+    var difY = positionA.y-positionB.y;
     var difZ = positionA.z-positionB.z;
-    return Math.sqrt(difX*difX + difZ*difZ);
+    return Math.sqrt(difX*difX + difY*difY + difZ*difZ);
 }
 
 var initialColor = 0x001400;
