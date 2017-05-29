@@ -323,9 +323,6 @@ function animate(timestamp) {
 
   TWEEN.update();
 
-  console.log(camera.rotation.y);
-  if (menuRotationValue && menuRotationValue.rotation)
-    console.log(menuRotationValue.rotation.y);
   if (menuRotationValue && menuRotationValue.rotation && (menuRotationValue.rotation.y < camera.rotation.y - 0.25 || menuRotationValue.rotation.y > camera.rotation.y + 0.25)) {
     hideMenu();
   }
