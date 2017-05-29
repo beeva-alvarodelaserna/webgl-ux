@@ -125,11 +125,14 @@ addButtonHome();
 animateHints();
 
 var plane, container, buttonA, buttonB, buttonC, homeButton, distanceToCamera;
+var pivot;
 function addTopButtons() {
   var geometry = new THREE.PlaneGeometry(0.6,0.6);
+  pivot = new THREE.Object3D();
+  scene.add(pivot);
   
   container = new THREE.Object3D();
-  container.position.set(camera.position.x, camera.position.y + 3, camera.position.z - 1);
+  container.position.set(camera.position.x, camera.position.y + 1, camera.position.z - 1);
   // addButtonA();
   var textureLoader = new THREE.TextureLoader();;
   var material = new THREE.MeshBasicMaterial({
@@ -210,7 +213,8 @@ function addTopButtons() {
     }
   });
   
-  scene.add(container);
+  // scene.add(container);
+  pivot.add(container);
 
   distanceToCamera = distance(container.position, { x: 0, y: camera.position.y, z: 0 });
 }
@@ -339,7 +343,8 @@ function animate(timestamp) {
   homeButton.rotation.setFromRotationMatrix(camera.matrix);
 
   manager.render(scene, camera, timestamp);
-  container.lookAt(camera.position);
+  // container.lookAt(camera.position);
+  pivot.lookAt(camera.position);
   homeButton.lookAt(camera.position);
   requestAnimationFrame(animate);
 
@@ -360,19 +365,38 @@ function updateMenuOpacity(radians) {
   buttonB.material.opacity = opacity;
   buttonC.material.opacity = opacity;
 }
-
+var vector = new THREE.Vector3();
 function updateMenuPosition(rotation) {
   if (rotation.x < menuPosition - 0.2 || rotation.x > menuPosition + 0.2) {
-    var newPosX = 0 - distanceToCamera * Math.sin(rotation.y);
-    var newPosY = 3;
-    var newPosZ = 2 - distanceToCamera * Math.cos(rotation.y);
-    container.position.x = newPosX;
-    container.position.y = newPosY;
-    container.position.z = newPosZ;
+    // var newPosX = 0 - distanceToCamera * Math.cos(rotation.y);
+    // var newPosY = 3;
+    // var newPosZ = 2 - distanceToCamera * Math.sin(rotation.y);
+    // container.position.x = newPosX;
+    // container.position.y = newPosY;
+    // container.position.z = newPosZ;
+    var yaxis = new THREE.Vector3(0, 1, 0);
+    var zaxis = new THREE.Vector3(0, 0, 1);
+    var direction = zaxis.clone();
+    // Apply the camera's quaternion onto the unit vector of one of the axes
+    // of our desired rotation plane (the z axis of the xz plane, in this case).
+    direction.applyQuaternion(camera.quaternion);
+    // Project the direction vector onto the y axis to get the y component
+    // of the direction.
+    var ycomponent = yaxis.clone().multiplyScalar(direction.dot(yaxis));
+    // Subtract the y component from the direction vector so that we are
+    // left with the x and z components.
+    direction.sub(ycomponent);
+    // Normalize the direction into a unit vector again.
+    direction.normalize();
+    // Set the pivot's quaternion to the rotation required to get from the z axis
+    // to the xz component of the camera's direction.
+    pivot.quaternion.setFromUnitVectors(zaxis, direction);
+    // Finally, set the pivot's position as well, so that it follows the camera.
+    pivot.position.copy(camera.position);
   }
 }
 
-var menuPosition = 0.96;
+var menuPosition = 0.96; // para posicion inicial de 0,3,-1
 function radiansToOpacity(radians) {
   var minOpacity = 0.2;
   var maxOpacity = 1;
@@ -387,6 +411,16 @@ function radiansToOpacity(radians) {
   } else {
     return menuPosition*radians/maxOpacity;
   }
+}
+
+var rotWorldMatrix, rotResultMatrix;
+function rotateAroundWorldAxis(object, axis, radians) {
+  rotResultMatrix = new THREE.Matrix4();
+  rotWorldMatrix = new THREE.Matrix4();
+  rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
+  rotResultMatrix.multiplyMatrices(object.matrix, rotWorldMatrix);
+  object.matrix = rotResultMatrix;
+  object.rotation.setEulerFromRotationMatrix(object.matrix);
 }
 
 function changeColor(object, colorHex) {
