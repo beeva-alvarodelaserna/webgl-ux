@@ -122,8 +122,10 @@ var z = 0 - radius;
 addMenu();
 addMesh(boxGeometry, x, 0, z);
 
-var plane;
+var plane, menuAction1, menuAction2, menuAction3;
+var menu;
 function addMenu() {
+  menu = new THREE.Group();
   var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
     map: textureLoader.load("assets/actionButton.png"),
     transparent: false,
@@ -134,7 +136,7 @@ function addMenu() {
   plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), img);
   changeScaleSingle(plane, 0.5);
   plane.visible = false;
-  plane.position.set(0, 1.5, -3.1);
+  plane.position.set(0, 0, -3.1);
   
   Reticulum.add( plane, {
     reticleHoverColor: 0x00fff6,
@@ -146,8 +148,40 @@ function addMenu() {
       changeScaleSingle(plane, 0.7);
     }
   });
+  menuAction1 = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), img);
+  changeScaleSingle(menuAction1, 0.5);
+  menuAction1.visible = false;
+  menuAction1.position.set(0, 0, -3.1);
+  
+  Reticulum.add( menuAction1, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeScaleSingle(menuAction1, 0.8);
+    },
+    onGazeOut: function() {
+      changeScaleSingle(menuAction1, 0.7);
+    }
+  });
+  menuAction2 = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), img);
+  changeScaleSingle(menuAction2, 0.5);
+  menuAction2.visible = false;
+  menuAction2.position.set(0, 0, -3.1);
+  
+  Reticulum.add( menuAction2, {
+    reticleHoverColor: 0x00fff6,
+    fuseVisible: true,
+    onGazeOver: function() {
+      changeScaleSingle(menuAction2, 0.8);
+    },
+    onGazeOut: function() {
+      changeScaleSingle(menuAction2, 0.7);
+    }
+  });
 
   parent.add(plane);
+  parent.add(menuAction1);
+  parent.add(menuAction2);
 }
 
 function addSkyBox() {
@@ -171,7 +205,7 @@ var object;
 function addMesh(geo, x, y, z) {
   object = new THREE.Mesh( geo, new THREE.MeshLambertMaterial( { 
     color: Math.random() * 0xffffff,
-    depthWrite: false 
+    depthWrite: true 
   } ) );    
   object.position.x = x;
   object.position.y = y;
@@ -201,16 +235,34 @@ function addMesh(geo, x, y, z) {
 var menuIsShowing = true;
 function showMenu() {
   plane.visible = true;
+  menuAction1.visible = true;
+  menuAction2.visible = true;
   movement({x: 0, y: 1.5, z: -3.1}, plane.position, 0, 500, TWEEN.Easing.Quartic.Out);
+  movement({x: 0, y: 1.5, z: -3.1}, menuAction1.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    movement({x: 0, y: 2.3, z: -3.1}, menuAction1.position, 0, 500, TWEEN.Easing.Quartic.Out);
+  });
+  movement({x: 0, y: 1.5, z: -3.1}, menuAction2.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    movement({x: 0.8, y: 2.3, z: -3.1}, menuAction2.position, 0, 500, TWEEN.Easing.Quartic.Out);
+  });
   changeScaleSingle(plane, 0.7);
-  console.log('showMenu', plane.position)
+  changeScaleSingle(menuAction1, 0.7);
+  changeScaleSingle(menuAction2, 0.7);
   menuIsShowing = true;
 }
 
 function hideMenu() {
   changeScaleSingle(plane, 0.5);
-  movement({x: 0, y: 0, z: -3.1}, plane.position, 0, 500, TWEEN.Easing.Quartic.Out);
-  console.log('hideMenu', plane.position)
+  changeScaleSingle(menuAction1, 0.5);
+  changeScaleSingle(menuAction2, 0.5);
+  movement({x: 0, y: 0, z: -3.1}, plane.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    plane.visible = false;
+  });
+  movement({x: 0, y: 0, z: -3.1}, menuAction1.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    menuAction1.visible = false;
+  });
+  movement({x: 0, y: 0, z: -3.1}, menuAction2.position, 0, 500, TWEEN.Easing.Quartic.Out, function() {
+    menuAction2.visible = false;
+  });
   menuIsShowing = false;
 }
 
@@ -256,6 +308,8 @@ function animate(timestamp) {
 
   manager.render(scene, camera, timestamp);
   plane.lookAt(camera.position);
+  menuAction1.lookAt(camera.position);
+  menuAction2.lookAt(camera.position);
   requestAnimationFrame(animate);
 
   TWEEN.update();
@@ -275,12 +329,15 @@ function changeScaleSingle(object, scale) {
   changeScale(object, scale, scale, scale);
 }
 
-function movement(value, object, delay, duration, easingType) {
+function movement(value, object, delay, duration, easingType, callback) {
   //var easingType = TWEEN.Easing.Back.Out;
   var tween = new TWEEN.Tween(object)
     .to(value, duration)
     .easing(easingType)
     .delay(delay)
+    .onComplete(function() {
+      if (callback) callback();
+    })
     .start();
 }
 /*
