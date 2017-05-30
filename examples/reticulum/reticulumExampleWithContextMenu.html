@@ -255,7 +255,6 @@ var menuRotationValue;
 function saveMenuRotationValue() {
   menuRotationValue = new THREE.Object3D();
   menuRotationValue.rotation.copy(camera.rotation);
-  console.log('menuRotationValue', menuRotationValue.rotation.y);
 }
 
 function hideMenu() {
