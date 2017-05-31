@@ -341,7 +341,6 @@ function calculateDistances() {
     for (var i = 0; i < parent.children.length; i++) {
         //distancesFromReticleToObject.push(distance(camera.position, parent.children[i].position));
         var dist = distance(camera.position, parent.children[i].position);
-        console.log('distance to object ', i, dist);
         distancesFromReticleToObject.push(dist);
     }
 }
