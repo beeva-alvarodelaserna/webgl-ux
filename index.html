@@ -212,7 +212,7 @@
 
 									<h3 class="space-top"><strong></strong></h3>
 
-					
+
 									<h3 class="space-top">¿Qué acción va a realizar?</h3>
 
 									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
@@ -331,97 +331,97 @@
 								<h4>Contexto</h4>
 								<h5>¿Que problema resuelve?</h5>
 								<p>En un entorno 360 o en un espacio virtual, como es más fácil perderse y el usuario está dentro de nuestro interfaz, es importante dar al usuario la opción de salir o escapar en cualquier momento.</h4>
-								<p>Una buena manera de solucionar esto es tener un botón de escape o de home siempre en los pies del usuario, de tal manera que independientemente de dónde se encuentre, siempre tenga un acceso rápido a esta opción</p>
-								<p>Es importante tener en cuenta lo siguiente</p>
-								<ul>
-									<li>Este botón o elemento interactivo debe cumplir todas las normas de elementos de interacción</li>
-									<li>El botón siempre tiene que estar orientado al usuario para que este lo lea siempre correctamente</li>
-									<li>Es una buena práctica, indicar al usuario al inicio que dispone de esa opción</li>
-								</ul>
+									<p>Una buena manera de solucionar esto es tener un botón de escape o de home siempre en los pies del usuario, de tal manera que independientemente de dónde se encuentre, siempre tenga un acceso rápido a esta opción</p>
+									<p>Es importante tener en cuenta lo siguiente</p>
+									<ul>
+										<li>Este botón o elemento interactivo debe cumplir todas las normas de elementos de interacción</li>
+										<li>El botón siempre tiene que estar orientado al usuario para que este lo lea siempre correctamente</li>
+										<li>Es una buena práctica, indicar al usuario al inicio que dispone de esa opción</li>
+									</ul>
 
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="https://framer.cloud/RcYak/"  target="_blank">FRAMER</a></p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="https://framer.cloud/RcYak/"  target="_blank">FRAMER</a></p>
+
+								</div>
+								<!--  end row -->
+
+
+
+								<!-- end container -->
 
 							</div>
-							<!--  end row -->
-
-
-
-							<!-- end container -->
 
 						</div>
-
 					</div>
+
 				</div>
 
 			</div>
+
+			<footer class="footer footer-transparent">
+				<div class="container">
+					<nav class="pull-left">
+						<ul>
+							<li>
+								<a href="https://labs.beeva.com/" target="_blank">
+									BBEVA labs
+								</a>
+							</li>
+							<li>
+								<a href="https://labs.beeva.com/about" target="_blank">
+									About
+								</a>
+							</li>
+						</ul>
+					</nav>
+					<div class="social-area pull-right">
+						<a class="btn btn-social btn-twitter btn-simple" href="">
+							<i class="fa fa-twitter"></i>
+						</a>
+						<a class="btn btn-social btn-facebook btn-simple" href="">
+							<i class="fa fa-facebook-square"></i>
+						</a>
+						<a class="btn btn-social btn-google btn-simple" href="">
+							<i class="fa fa-google-plus"></i>
+						</a>
+					</div>
+					<div class="copyright">
+						&copy; 2017 BEEVA labs.
+					</div>
+				</div>
+			</footer>
 
 		</div>
 
-		<footer class="footer footer-transparent">
-			<div class="container">
-				<nav class="pull-left">
-					<ul>
-						<li>
-							<a href="https://labs.beeva.com/" target="_blank">
-								BBEVA labs
-							</a>
-						</li>
-						<li>
-							<a href="https://labs.beeva.com/about" target="_blank">
-								About
-							</a>
-						</li>
-					</ul>
-				</nav>
-				<div class="social-area pull-right">
-					<a class="btn btn-social btn-twitter btn-simple" href="">
-						<i class="fa fa-twitter"></i>
-					</a>
-					<a class="btn btn-social btn-facebook btn-simple" href="">
-						<i class="fa fa-facebook-square"></i>
-					</a>
-					<a class="btn btn-social btn-google btn-simple" href="">
-						<i class="fa fa-google-plus"></i>
-					</a>
-				</div>
-				<div class="copyright">
-					&copy; 2017 BEEVA labs.
-				</div>
-			</div>
-		</footer>
+		<script>
+			w3IncludeHTML();
+		</script>
 
-	</div>
+	</body>
+	<!--   Core JS Files   -->
+	<script src="assets/js/jquery.min.js" type="text/javascript"></script>
+	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="assets/js/material.min.js"></script>
+
+	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+	<script src="assets/js/nouislider.min.js" type="text/javascript"></script>
+
+	<!--  Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
+	<script src="assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
+
+	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
+	<script src="assets/js/material-kit.js" type="text/javascript"></script>
 
 	<script>
-		w3IncludeHTML();
-	</script>
+		var header_height;
+		var fixed_section;
+		var floating = false;
 
-</body>
-<!--   Core JS Files   -->
-<script src="assets/js/jquery.min.js" type="text/javascript"></script>
-<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/js/material.min.js"></script>
+		$().ready(function(){
+			suggestions_distance = $("#suggestions").offset();
+			pay_height = $('.fixed-section').outerHeight();
 
-<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="assets/js/nouislider.min.js" type="text/javascript"></script>
-
-<!--  Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
-<script src="assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
-
-<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
-<script src="assets/js/material-kit.js" type="text/javascript"></script>
-
-<script>
-	var header_height;
-	var fixed_section;
-	var floating = false;
-
-	$().ready(function(){
-		suggestions_distance = $("#suggestions").offset();
-		pay_height = $('.fixed-section').outerHeight();
-
-		$(window).on('scroll', materialKit.checkScrollForTransparentNavbar);
+			$(window).on('scroll', materialKit.checkScrollForTransparentNavbar);
 
 			// the body of this function is in assets/material-kit.js
 			materialKit.initSliders();
