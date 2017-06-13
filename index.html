@@ -33,6 +33,10 @@
 			text-align: left;
 		}
 		h1,h2,h3,h4 {font-weight: 700}
+		h3{margin-top: 1em }
+		h2+h3{margin-top: 0 }
+
+
 		.space-top{margin-top: 60px}
 		.atv, .str{
 			color: #05AE0E;
@@ -73,13 +77,12 @@
 			padding-right: 15px;
 			padding-left: 15px;
 		}
-		.table-shopping .td-name{
+		.exampleImage{margin: 20px 0}
+/*		.table-shopping .td-name{
 			min-width: 130px;
-		}
+		}*/
 	</style>
-
 	<script src="assets/cursorTail/libs/flwebgl-0.2.min.js"></script>
-	
 </head>
 
 <body class="components-page">
@@ -140,7 +143,7 @@
 									<li><a href="#cursores-row">Cursores</a></li>
 									<li><a href="#elementos-row">Elementos accionables</a></li>
 									<li><a href="#precargas-row">Precargas</a></li>
-									<li><a href="#video-row">Vídeo players</a></li>      
+									<li><a href="#mediaplayers-row">Mediaplayers</a></li>      
 								</ul>
 							</div>
 						</div>
@@ -152,194 +155,191 @@
 
 									<h2>Cursores</h2>
 
-									<h3 class="space-top">Cursor de visión o gaze-pointer </h3>
+									<h3>Cursor de visión o gaze-pointer </h3>
 
 									<p>El gaze-pointer o puntero de mirada, es el puntero que el usuario controla con su orientación de cabeza e interactúa con objetos o elementos de interfaz de usuario como lo harían con un puntero del ratón. El evento "clic" puede venir desde un botón de gamepad o toque en el touchpad de Gear VR.</p>
 
-									<img src="assets/img/interacciones/cursores/gazePointer.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<img src="assets/img/interacciones/cursores/gazePointer.png" class="img-responsive exampleImage" width="730" >
 
-									<h3 class="space-top">Cursor de visión con rastro</h3>
+									<h3>Cursor de visión con rastro</h3>
 
 									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-									<img src="assets/img/interacciones/cursores/gazeCursoTrail.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<img src="assets/img/interacciones/cursores/gazeCursoTrail.png" class="img-responsive exampleImage" width="730" >
 
-								</div>
 
-								<h4>Contexto </h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>Mejora el seguimiento del cursor mientras el usario navega con el control de mirada.</p><br>
-								<h4>Solución </h4>
-								<p>Dotar a el cursor de un rastro de partucilas cuando está en movimiento.</p><br>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo (Adobe Aniamte CC)<a href="examples/cursorTail/cursorTail.html"  target="_blank"> WEBGL</a></p>
 
-								<h3 class="space-top">Cursor que afecta a la malla y al entorno</h3>
-								<p>Otra manera de dejar rastro es que el cursor interactue por defecto con el entorno afectando al entorno. Esto depende mucho del contexto pero puede ayudar a crear experiencias muy interesantes e inmersivas (cesped, agua, mallas, arena, fichas)</p>
+									<h4>Contexto </h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Mejora el seguimiento del cursor mientras el usario navega con el control de mirada.</p>
+									<h4>Solución </h4>
+									<p>Dotar a el cursor de un rastro de partucilas cuando está en movimiento.</p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo (Adobe Aniamte CC)<a href="examples/cursorTail/cursorTail.html"  target="_blank"> WEBGL</a></p>
+									<p>Ver ejemplo <a href="https://framer.cloud/zQlHQ/" target="_blank">FRAMER</a></p>
 
-								<img src="assets/img/interacciones/cursores/gazeCurosorEnvironment.png" width="730" class="img-responsive">
+									<h3>Cursor que afecta a la malla y al entorno</h3>
+									<p>Otra manera de dejar rastro es que el cursor interactue por defecto con el entorno afectando al entorno. Esto depende mucho del contexto pero puede ayudar a crear experiencias muy interesantes e inmersivas (cesped, agua, mallas, arena, fichas)</p>
+									<img src="assets/img/interacciones/cursores/gazeCurosorEnvironment.png" width="730" class="img-responsive exampleImage">
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Ayuda a mejorar la experiencia y la sensacción de inmersión dependiendo del contexto</p>
+									<h4>Solución</h4>
+									<p>Rastro en la malla o en los objetos que se cruzan con el cursor de mirada </p><br>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo <a href="https://bear71vr.nfb.ca/" target="_blank">WEBGL</a></p> 
 
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>Ayuda a mejorar la experiencia y la sensacción de inmersión dependiendo del contexto</p><br>
-								<h4>Solución</h4>
-								<p>Rastro en la malla o en los objetos que se cruzan con el cursor de mirada </p><br>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo <a href="https://bear71vr.nfb.ca/" target="_blank">WEBGL</a></p> 
-
-								<h3 class="space-top">Imantación suave del cursor al objeto accionable</h3>
-								<legend></legend>
-								<p>El objeto accionable tiene un radio de acción, similar al magnetismo, en el que el cursor se queda pegado y evita que se salga del área de acción ante movimientos leves del usuario</p>
-
-								<img src="assets/img/interacciones/cursores/gazeCursorImmobility.png" width="730" class="img-responsive">
-
-								<h4>Contexto </h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>Evita que el usuario pierda la posibilidad de actuar sobre un elemento por pequeños movimientos involuntarios o naturales.</p>
-								<h4>Solución </h4>
-								<p>Cuando el gaze pointer se acerca al elemento interactivo se queda pegado a este, como si el elemento hubiera atraido al puntero y este se quedará pegado a él siempre que el movimiento sea leve. De esta mananera facilitamos la interacción notablemente. <br> 
-									Cuando el usuario cambie el punto de vista, el gaze pointer se separará del elemento interactivo y volverá al centro</p>
+									<h3>Imantación suave del cursor al objeto accionable</h3>
+									<p>El objeto accionable tiene un radio de acción, similar al magnetismo, en el que el cursor se queda pegado y evita que se salga del área de acción ante movimientos leves del usuario</p>
+									<img src="assets/img/interacciones/cursores/gazeCursorImmobility.png" width="730" class="img-responsive exampleImage">
+									<h4>Contexto </h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Evita que el usuario pierda la posibilidad de actuar sobre un elemento por pequeños movimientos involuntarios o naturales.</p>
+									<h4>Solución </h4>
+									<p>Cuando el gaze pointer se acerca al elemento interactivo se queda pegado a este, como si el elemento hubiera atraido al puntero y este se quedará pegado a él siempre que el movimiento sea leve. De esta mananera facilitamos la interacción notablemente. Cuando el usuario cambie el punto de vista, el gaze pointer se separará del elemento interactivo y volverá al centro</p>
 									<h4>Diseño </h4>
 									<p>Ver ejemplo <a href="https://framer.cloud/cFdJL" target="_blank">FRAMER</a> 
 
-								<h3 class="space-top">El cursor cambia dependiendo de la acción</h3>
-								<p>Dependiendo del contexto, el gaze pointer cambiará su forma indicando que acción voy a realizar cuando se sitúa sobre el elemento interactivo </p>
-								<img src="assets/img/interacciones/cursores/gazeCursoChangeAction.png" width="730" class="img-responsive">
-								<h4>Contexto </h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>No es para resolver un problema en concreto pero mejora la inmersión y la usabilidad de la aplicación</p>
-								<h4>Solución </h4>
-								<p>Cuando el gaze pointer se situa sobre el elemento accionable o su zona activa cambiará de forma indicando lo acción que voy a realizar. Ej. Un punto de mira si voy a disparar, unos pasos o una flecha si voy a avanzar, una lupa para bucar, etc.</p>
-									<h4>Diseño </h4>
-									<p>Ver ejemplo <a href="https://framer.cloud/yCLSi/" target="_blank">FRAMER</a></p> 
+										<h3>El cursor cambia dependiendo de la acción</h3>
+										<p>Dependiendo del contexto, el gaze pointer cambiará su forma indicando que acción voy a realizar cuando se sitúa sobre el elemento interactivo </p>
+										<img src="assets/img/interacciones/cursores/gazeCursoChangeAction.png" width="730" class="img-responsive exampleImage">
+										<h4>Contexto </h4>
+										<h5>¿Que problema resuelve?</h5>
+										<p>No es para resolver un problema en concreto pero mejora la inmersión y la usabilidad de la aplicación</p>
+										<h4>Solución </h4>
+										<p>Cuando el gaze pointer se situa sobre el elemento accionable o su zona activa cambiará de forma indicando lo acción que voy a realizar. Ej. Un punto dmira si voy a disparar, unos pasos o una flecha si voy a avanzar, una lupa para bucar, etc.</p>
+										<h4>Diseño </h4>
+										<p>Ver ejemplo <a href="https://framer.cloud/yCLSi/" target="_blank">FRAMER</a></p> 
 
+										<h3>El cursor se adapta a las normales del entorno</h3>
+										<p>Cuando podemos interactuar sobre distintos elemntos en una escena o queremos indicar con precisión dónde se encuentra el puntero, este se adatará a las normales de la malla</p>
+										<img src="assets/img/interacciones/cursores/normalMatching.png" width="730" class="img-responsive exampleImage">
+										<h4>Contexto </h4>
+										<h5>¿Que problema resuelve?</h5>
+										<p>Ayuda a mejorar la experiencia, indica con mayor precisión dónde se encuentra el cursor, sobre que elemento podemos interactuar o hacia que punto concreto vamos a desplazarnos</p>
+										<h4>Solución </h4>
+										<p>El cursor girará (a poder ser en los tres ejes), adaptándose a las normales de la malla 3D. </p>
+										<h4>Diseño </h4>
+										<p>Ver ejemplo <a href="https://bear71vr.nfb.ca/" target="_blank">WEBGL</a></p> 
+
+									</div>
 								</div>
 								<!--  end row -->
 								<!-- elemntos accionables row -->
 								<div class="tim-row" id="elementos-row">
 
 									<h2>Elementos accionables</h2>
+									<h3>Botones, menús y objetos con los que podemos interactuar</h3>
+									<p>En VR Móvil dispositivo las interacciones están muy limitadas y actuar con precisión también es dificil. Es por esto por lo que los elementos interactivos han de facilitar y dar la información necesaria al usuario para que tenga una experiencia satisfactoria dentro de nuestro sistema VR</p>
+									<h3>¿Qué acción va a realizar?</h3>
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/QueAccionVaARealizar.png" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto </h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Debido a la complejidad de la interacción en VR Móvil, los elementos interacctivos no sólo deben estar destacados sino que deben indicar, bien con un texto o bien con la forma del elemento (dependiendo del contexto y de la acción), que ocurrirá cuando interactuamos con él. </p>
+									<h4>Solución</h4>
+									<p>Los elementos accionables deben tener un label indicando que va a ocurrir cuando interactue, o bien una forma (forma, color, animación) suficientemente clara para indicar al usuario que acción realiza cada elemento</p>
+									<p>Es muy importante mantener coherencia formal, funcional y semántica entre todos los elementos interactivos</p>
+									<p>Es importante testear estos elementos para asegurarnos que se ven correctamente y que no ocurren ciertos errores:</p>
+									<ul>
+										<li>Que el texto se lee (legibilidad)</li>
+										<li>Que el texto se lee siempre. Cuando nos movemos por el entorno el label del elemento siempre debe colocarse de modo que el usuario pueda leerlo</li>
+										<li>Si el elemento una dirección, siempre deberá indicar la dirección adecuada, independientemente del punto de vista del usuario</li>
+									</ul>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithLabels.html"  target="_blank"> WEBGL</a></p>
 
-									<h3 class="space-top"><strong></strong></h3>
-
-
-									<h3 class="space-top">¿Qué acción va a realizar?</h3>
+									<h3>Esto está cerca, esto está lejos</h3>
 
 									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-									<img src="assets/img/interacciones/elementosaccionables/QueAccionVaARealizar.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<img src="assets/img/interacciones/elementosaccionables/cercalejos.png" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>En un entorno 3D puede que no podemos mostrar todos los elementos accionables con sus etiquetas a la vez, porque además de cargar mucho el interfaz puede generar confusión al usuario y una experiencia terrible </p>
+									<h4>Solución</h4>
+									<p>El usuario tiene un área límite de actuación. Dentro de ese área, los elementos accionables no sólo quedarán destacados sino que podremos leer su etiqueta o distinguir cláramente la forma que indica la acción.</p>
+									<p>Fuera de este área de acción, si hay elementos sobre los que podré actuar, tenemos que indicar que "más allá" hay elementos accionables y pdoré actuar sobre ellos cuando me acerque.</p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithConditionsOnDistance.html"  target="_blank"> WEBGL</a></p>
 
-								</div>
+									<h3>Estado "Over"</h3>
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/estadoOver.png" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Indicar al usuario que puede actuar sobre algún elemento y que está dentro del área de acción</p>
+									<h4>Solución</h4>
+									<p>Siempre que el Gaze Pointer pase sobre un elemento interactivo, este cambiará su estado ya sea con un cambio de color, tamaño o forma</p>
+									<p>Debemos tener en cuenta los siguientes aspectos:</p>
+									<ul>
+										<li>Debe haber coherencia entre los distintos estados over de nuestro sistema</li>
+										<li>Si hacemos un cambio de tamaño, es mejor hacerlo más grande on Over, para evitar el efecto "Parpadeo"</li>
+										<li>Lo mismo pasa si cambiamos la forma o rotamos el elemento</li>
+									</ul>
+									<p>También es buena idea cambiar el cursor.</p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithStateChange.html"  target="_blank"> WEBGL</a></p>
 
-								<h4>Contexto </h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>Debido a la complejidad de la interacción en VR Móvil, los elementos interacctivos no sólo deben estar destacados sino que deben indicar, bien con un texto o bien con la forma del elemento (dependiendo del contexto y de la acción), que ocurrirá cuando interactuamos con él. </p>
-								<h4>Solución</h4>
-								<p>Los elementos accionables deben tener un label indicando que va a ocurrir cuando interactue, o bien una forma (forma, color, animación) suficientemente clara para indicar al usuario que acción realiza cada elemento</p>
-								<p>Es muy importante mantener coherencia formal, funcional y semántica entre todos los elementos interactivos</p>
-								<p>Es importante testear estos elementos para asegurarnos que se ven correctamente y que no ocurren ciertos errores:</p>
-								<ul>
-									<li>Que el texto se lee (legibilidad)</li>
-									<li>Que el texto se lee siempre. Cuando nos movemos por el entorno el label del elemento siempre debe colocarse de modo que el usuario pueda leerlo</li>
-									<li>Si el elemento una dirección, siempre deberá indicar la dirección adecuada, independientemente del punto de vista del usuario</li>
-								</ul>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithLabels.html"  target="_blank"> WEBGL</a></p>
+									<h3><strong>2 segundos de "click" (más o menos)</strong></h3>
 
-								<h3 class="space-top">Esto está cerca, esto está lejos</h3>
-
-								<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-								<img src="assets/img/interacciones/elementosaccionables/cercalejos.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>En un entorno 3D puede que no podemos mostrar todos los elementos accionables con sus etiquetas a la vez, porque además de cargar mucho el interfaz puede generar confusión al usuario y una experiencia terrible </p><br>
-								<h4>Solución</h4>
-								<p>El usuario tiene un área límite de actuación. Dentro de ese área, los elementos accionables no sólo quedarán destacados sino que podremos leer su etiqueta o distinguir cláramente la forma que indica la acción.</p>
-								<p>Fuera de este área de acción, si hay elementos sobre los que podré actuar, tenemos que indicar que "más allá" hay elementos accionables y pdoré actuar sobre ellos cuando me acerque.</p>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithConditionsOnDistance.html"  target="_blank"> WEBGL</a></p>
-
-								<h3 class="space-top">Estado "Over"</h3>
-
-								<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-								<img src="assets/img/interacciones/elementosaccionables/estadoOver.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/tiempoClick.png" class="img-responsive exampleImage" width="730" >
 
 
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>Indicar al usuario que puede actuar sobre algún elemento y que está dentro del área de acción</p>
-								<h4>Solución</h4>
-								<p>Siempre que el Gaze Pointer pase sobre un elemento interactivo, este cambiará su estado ya sea con un cambio de color, tamaño o forma</p>
-								<p>Debemos tener en cuenta los siguientes aspectos:</p>
-								<ul>
-									<li>Debe haber coherencia entre los distintos estados over de nuestro sistema</li>
-									<li>Si hacemos un cambio de tamaño, es mejor hacerlo más grande on Over, para evitar el efecto "Parpadeo"</li>
-									<li>Lo mismo pasa si cambiamos la forma o rotamos el elemento</li>
-								</ul>
-								<p>También es buena idea cambiar el cursor.</p>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithStateChange.html"  target="_blank"> WEBGL</a></p>
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>En VR Móvil, cuando no tengo ningún dispositivo extra para interactuar con el interfaz, la principal (o única) interacción, es mantener el gaze pointer sobre el elemento interactiva un tiempo determinado</p>
+									<h4>Solución</h4>
+									<p>Después de hacer muchas pruebas hemos comprobado que 2 segundos es el tiempo adecuado (más o menos). Más tiempo se hace largo y menos es problemático, ya que el usuario a veces está mirando que pasa cuando interactua sobre el elemento</p>
+									<p><strong>Es muy importante indicar el tiempo de progreso de una manera clara al usuario.</strong></p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithStateChange.html"  target="_blank"> WEBGL</a></p>
 
-								<h3 class="space-top"><strong>2 segundos de "click" (más o menos)</strong></h3>
+									<h3>Menú desplegable en over</h3>
 
-								<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-								<img src="assets/img/interacciones/elementosaccionables/tiempoClick.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/menuDespegable.png" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Bien cuando el elemento es un menú con distintas opciones o bien cuando sobre el propio objeto pueda realizar diferentes acciones, tenemos que facilitar la posibilidad de actuar sobre esas opciones</p>
+									<h4>Solución</h4>
+									<p>Las distintas acciones se desplegarán justo al pasar por encima el elemento principal.</p>
+									<p>Es importante que tengamos en cuenta las siguientes cuestiones:</p>
+									<ul>
+										<li>El elemento principal se mantendrá con su estado "over" mientras las opciones secundarias permanezcan desplegadas</li>
+										<li>Estos nuevos elementos interactivos tienen que cumplir todas las normas que hemos descrito sobre los elementos interactivos. (Over, Label, click en 2 segundos, coherencia formal, ...) </li>
+										<li>Los nuevos elementos tienen que mostrar claramente que son opciones del elemento principal. Para esto lo normal es que salgan desde ese elemento y que se mantengan relacionados con ese elemento de una o varias maneras (Forma, color, distancia, ...)</li>
+										<li>Una vez desplegado el submenú, debe haber una área de acción que mientras que el usuario se mantenga en ella, el menú permanecerá desplegado y se ocultará cuando el gaze pointer se aleje lo sufuciente.</li>
+										<li>Como el elemento principal no es el que tiene las interacciones, si no son los que se desplegan, ese elemento principal no debe tener imantación del gaze pointer</li>
+									</ul>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithContextMenu.html"  target="_blank"> WEBGL</a></p>
 
+									<h3>El menú, sigue al usuario</h3>
 
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>En VR Móvil, cuando no tengo ningún dispositivo extra para interactuar con el interfaz, la principal (o única) interacción, es mantener el gaze pointer sobre el elemento interactiva un tiempo determinado</p>
-								<h4>Solución</h4>
-								<p>Después de hacer muchas pruebas hemos comprobado que 2 segundos es el tiempo adecuado (más o menos). Más tiempo se hace largo y menos es problemático, ya que el usuario a veces está mirando que pasa cuando interactua sobre el elemento</p>
-								<p><strong>Es muy importante indicar el tiempo de progreso de una manera clara al usuario.</strong></p>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithStateChange.html"  target="_blank"> WEBGL</a></p>
-
-								
-
-								<h3 class="space-top">Menú desplegable en over</h3>
-
-								<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-								<img src="assets/img/interacciones/elementosaccionables/menuDespegable.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>Bien cuando el elemento es un menú con distintas opciones o bien cuando sobre el propio objeto pueda realizar diferentes acciones, tenemos que facilitar la posibilidad de actuar sobre esas opciones</p>
-								<h4>Solución</h4>
-								<p>Las distintas acciones se desplegarán justo al pasar por encima el elemento principal.</p>
-								<p>Es importante que tengamos en cuenta las siguientes cuestiones:</p>
-								<ul>
-									<li>El elemento principal se mantendrá con su estado "over" mientras las opciones secundarias permanezcan desplegadas</li>
-									<li>Estos nuevos elementos interactivos tienen que cumplir todas las normas que hemos descrito sobre los elementos interactivos. (Over, Label, click en 2 segundos, coherencia formal, ...) </li>
-									<li>Los nuevos elementos tienen que mostrar claramente que son opciones del elemento principal. Para esto lo normal es que salgan desde ese elemento y que se mantengan relacionados con ese elemento de una o varias maneras (Forma, color, distancia, ...)</li>
-									<li>Una vez desplegado el submenú, debe haber una área de acción que mientras que el usuario se mantenga en ella, el menú permanecerá desplegado y se ocultará cuando el gaze pointer se aleje lo sufuciente.</li>
-									<li>Como el elemento principal no es el que tiene las interacciones, si no son los que se desplegan, ese elemento principal no debe tener imantación del gaze pointer</li>
-								</ul>
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithContextMenu.html"  target="_blank"> WEBGL</a></p>
-
-								<h3 class="space-top">El menú, sigue al usuario</h3>
-
-								<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-								<img src="assets/img/interacciones/elementosaccionables/HeadUpDisplayNavigation.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/HeadUpDisplayNavigation.png" class="img-responsive exampleImage" width="730" >
 
 
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>En un entorno 360, queremos evitar que el usuario pierda elementos importantes de interacción a los que es habitual que quiera recurrir a menudo</p><br>
-								<h4>Solución</h4>
-								<p>La solución que proponemos es un menú que se mantiene sobre la vertical de la mirada del usuario un poco por encima de línea del horizonte. El menú permanece oculto y aparece cuando el usuario mira hacia el menú este se hace visible</p>
-								<p>El comportamiento del menú será distinto si tiene una única opción o si tiene varias</p>
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>En un entorno 360, queremos evitar que el usuario pierda elementos importantes de interacción a los que es habitual que quiera recurrir a menudo</p>
+									<h4>Solución</h4>
+									<p>La solución que proponemos es un menú que se mantiene sobre la vertical de la mirada del usuario un poco por encima de línea del horizonte. El menú permanece oculto y aparece cuando el usuario mira hacia el menú este se hace visible</p>
+									<p>El comportamiento del menú será distinto si tiene una única opción o si tiene varias</p>
 
-								<h4>Diseño</h4>
-								<p>Ver ejemplo. <a href="https://framer.cloud/RcYak/"  target="_blank">FRAMER</a></p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="https://framer.cloud/RcYak/"  target="_blank">FRAMER</a></p>
 
-								<h3 class="space-top">Tener un botón de escape siempre a mano (o a pie)</h3>
+									<h3>Tener un botón de escape siempre a mano (o a pie)</h3>
 
-								<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
-								<img src="assets/img/interacciones/elementosaccionables/botonescape.png" class="img-responsive" width="730" style="margin-bottom: 60px;">
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/botonescape.png" class="img-responsive exampleImage" width="730" >
 
 
-								<h4>Contexto</h4>
-								<h5>¿Que problema resuelve?</h5>
-								<p>En un entorno 360 o en un espacio virtual, como es más fácil perderse y el usuario está dentro de nuestro interfaz, es importante dar al usuario la opción de salir o escapar en cualquier momento.</h4>
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>En un entorno 360 o en un espacio virtual, como es más fácil perderse y el usuario está dentro de nuestro interfaz, es importante dar al usuario la opción de salir o escapar en cualquier momento.</p>
+									<h4>Solución</h4>
 									<p>Una buena manera de solucionar esto es tener un botón de escape o de home siempre en los pies del usuario, de tal manera que independientemente de dónde se encuentre, siempre tenga un acceso rápido a esta opción</p>
 									<p>Es importante tener en cuenta lo siguiente</p>
 									<ul>
@@ -351,10 +351,58 @@
 									<h4>Diseño</h4>
 									<p>Ver ejemplo. <a href="https://framer.cloud/RcYak/"  target="_blank">FRAMER</a></p>
 
+									<h3>Menú permanente a los pies del usuario</h3>
+
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/bottomSubmenu.png" class="img-responsive exampleImage" width="730" >
+
+
+									<h4>Contexto</h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>La necesidad de tener un menú siempre accesible al usuario nos hace buscar múltiples soluciones dependiendo del contexto y de la cantidad e intems que tenga ese submenú</p>
+									<h4>Solución</h4>
+									<p>Además de las ya indicadas, una buena solución para tener una serie de opciones siempre accesibles es un menú despegable en vertical a partir de un botón situado a los pies del usuario</p>
+									<p>Esta opción es muy interesante por:</p>
+									<ul>
+										<li>Siempre tenemos un menú accesible en el mismo sitio</li>
+										<li>No hay elementos en medio de la escena que puedan molestar</li>
+										<li>Es muy útil cuando el submenú tiene muchos elementos</li>
+										<li>Como se despliega en vertical, limitamos el movimiento de la cabeza en un solo eje para acceder a los items del submenú, lo que facilita la interacción al usuario</li>
+									</ul>
+
+									<!-- <h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="https://framer.cloud/RcYak/"  target="_blank">FRAMER</a></p> -->
+
+
+								</div>
+
+								<div class="tim-row" id="mediaplayers-row">
+								<h2>Mediaplayers</h2>
+								<h3><strong></strong></h3>
+								<p>La realidad virtual es más que un formato, es un metaformato en el que podemos encontrar múltiples elementos que tienen su propia interacción</p>
+								<p>Uno de los más habituales que nos encontraremos son los mediaplayers, en los que podremos ver vídeo dentro de nuestro espacio 3D. Es por esto por lo que hemos querido dedicar una sección especial a estos elementos</p>
+
+
+									<h3>¿Qué acción va a realizar?</h3>
+
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/elementosaccionables/QueAccionVaARealizar.png" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto </h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Debido a la complejidad de la interacción en VR Móvil, los elementos interacctivos no sólo deben estar destacados sino que deben indicar, bien con un texto o bien con la forma del elemento (dependiendo del contexto y de la acción), que ocurrirá cuando interactuamos con él. </p>
+									<h4>Solución</h4>
+									<p>Los elementos accionables deben tener un label indicando que va a ocurrir cuando interactue, o bien una forma (forma, color, animación) suficientemente clara para indicar al usuario que acción realiza cada elemento</p>
+									<p>Es muy importante mantener coherencia formal, funcional y semántica entre todos los elementos interactivos</p>
+									<p>Es importante testear estos elementos para asegurarnos que se ven correctamente y que no ocurren ciertos errores:</p>
+									<ul>
+										<li>Que el texto se lee (legibilidad)</li>
+										<li>Que el texto se lee siempre. Cuando nos movemos por el entorno el label del elemento siempre debe colocarse de modo que el usuario pueda leerlo</li>
+										<li>Si el elemento una dirección, siempre deberá indicar la dirección adecuada, independientemente del punto de vista del usuario</li>
+									</ul>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="examples/reticulum/reticulumExampleWithLabels.html"  target="_blank"> WEBGL</a></p>
 								</div>
 								<!--  end row -->
-
-
 
 								<!-- end container -->
 
