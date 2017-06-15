@@ -34,7 +34,7 @@
 		}
 		h1,h2,h3,h4 {font-weight: 700}
 		h3{margin-top: 1em }
-		h2+h3{margin-top: 0 }
+		h2+h3{margin-top: 0; color: LightBlue}
 
 
 		.space-top{margin-top: 60px}
@@ -155,7 +155,7 @@
 
 									<h2>Cursores</h2>
 
-									<h3>Cursor de visión o gaze-pointer </h3>
+									<h3>Reticle, cursor de visión o gaze-pointer </h3>
 
 									<p>El gaze-pointer o puntero de mirada, es el puntero que el usuario controla con su orientación de cabeza e interactúa con objetos o elementos de interfaz de usuario como lo harían con un puntero del ratón. El evento "clic" puede venir desde un botón de gamepad o toque en el touchpad de Gear VR.</p>
 
@@ -377,14 +377,13 @@
 								</div>
 
 								<div class="tim-row" id="mediaplayers-row">
-								<h2>Mediaplayers</h2>
-								<h3><strong></strong></h3>
-								<p>La realidad virtual es más que un formato, es un metaformato en el que podemos encontrar múltiples elementos que tienen su propia interacción</p>
-								<p>Uno de los más habituales que nos encontraremos son los mediaplayers, en los que podremos ver vídeo dentro de nuestro espacio 3D. Es por esto por lo que hemos querido dedicar una sección especial a estos elementos</p>
+									<h2>Mediaplayers</h2>
+									<h3>La pantalla dentro de la pantalla</h3>
+									<p>La realidad virtual es más que un formato, es un metaformato en el que podemos encontrar múltiples elementos que tienen su propia interacción</p>
+									<p>Uno de los más habituales que nos encontraremos son los mediaplayers, en los que podremos ver vídeo dentro de nuestro espacio 3D. Es por esto por lo que hemos querido dedicar una sección especial a estos elementos</p>
 
 
 									<h3>De frente a la pantalla</h3>
-
 									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
 									<img src="assets/img/interacciones/mediaplayers/mirandoALaPantalla.png" class="img-responsive exampleImage" width="730" >
 									<h4>Contexto </h4>
@@ -399,7 +398,36 @@
 										<li>Se recomienda que el usuario pueda controlar la reproducción del vídeo</li>
 									</ul>
 									<h4>Diseño</h4>
-									<p>Ver ejemplo. <a href=""  target="_blank"> Ejemplo</a></p>
+									<p>Ver ejemplo. <a href="https://beeva-sergiosantamaria.github.io/VRLabs/"  target="_blank">VR Open labs</a></p>
+
+									<h3>Dar el control al usuario</h3>
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/mediaplayers/mediaPlayerControlsShow.png" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto </h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>Cuando se reproudce contenido multimedia, es importante que el usuario sea capaz de tener control fácil sobre él para evitar que se pierda contenido, que sea capad de pararlo cuando lo necesite</p>
+									<h4>Solución</h4>
+									<p>Siempre que un vídeo empiece a reproducirse el usuario debe tener a la vista y accesible el control del vídeo</p>
+									<p>Dependiendo del contexto y de la complejidad podemos añadir funciones a estos controles pero como mínimo tiene que poder parar y volver a reproducir</p>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="https://beeva-sergiosantamaria.github.io/VRLabs/"  target="_blank">VR Open labs</a></p>
+
+									<h3>Perder el control, pero saber dónde</h3>
+									<!-- <div w3-include-html="./examples/cursorTail/cursorTail.html"></div> -->
+									<img src="assets/img/interacciones/mediaplayers/mediaPlayerControlsHide.gif" class="img-responsive exampleImage" width="730" >
+									<img src="assets/img/interacciones/mediaplayers/mediaPlayerControlsHide_2.gif" class="img-responsive exampleImage" width="730" >
+									<h4>Contexto </h4>
+									<h5>¿Que problema resuelve?</h5>
+									<p>A veces, por contexto (queremos que el vídeo ocupe más que toda la visión del usuario o que no haya ningún elemento más en la escena), o por libertad de movimientos, (el usuario deja de atender la reproducción), tenemos que indicar al usuario dónde se encuentran los controles del Mediaplayer para que puede usarlos cuando lo desee</p>
+									<h4>Solución</h4>
+									<p>Se puede hacer de varias maneras, pero es muy importante que el usuario tenga claro dónde están los controles para poder acceder a ellos en caso de necesitarlos.</p>
+									<p>Algunas de las opciones propuestas son:</p>
+									<ul>
+										<li>Los controles aparecen visibles al usuario, permanecen un momento y se mueven lentamente hacia abajo saliendo del plano. De este modo, el usuario sabe que para acceder a los controles basta con mirar un poco hacia abajo. (Recomendamos hacia abajo ya que es el movimiento más fácil y el que requiere menos desplazamciento)</li>
+										<li>Los controles aparecen visibles al usuario y se agrupan en un único elemento</li>
+									</ul>
+									<h4>Diseño</h4>
+									<p>Ver ejemplo. <a href="https://beeva-sergiosantamaria.github.io/VRLabs/"  target="_blank">VR Open labs</a></p>
 								</div>
 								<!--  end row -->
 
